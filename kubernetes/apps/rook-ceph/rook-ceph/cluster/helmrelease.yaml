@@ -6,6 +6,7 @@ metadata:
   name: rook-ceph-cluster
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: rook-ceph-cluster
@@ -14,18 +15,33 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-operator
+      namespace: rook-ceph
+    - name: snapshot-controller
+      namespace: system-controllers
   values:
     monitoring:
       enabled: true
       createPrometheusRules: true
     ingress:
       dashboard:
-        ingressClassName: "internal-nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        ingressClassName: internal
         host:
-          name: rook-main.int.maunder.co
-          path: "/"
+          name: rook.int.maunder.co
+          path: /
     toolbox:
-      enabled: false
+      enabled: true
     configOverride: |
       [global]
       bdev_enable_discard = true
@@ -46,6 +62,21 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
+      storage:
+        useAllNodes: true
+        useAllDevices: true
+        deviceFilter: nvme0n1
+        config:
+          osdsPerDevice: "1"
+      placement:
+        mgr: &placement
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: node-role.kubernetes.io/control-plane
+                      operator: Exists
+        mon: *placement
       resources:
         mgr:
           requests:
@@ -71,9 +102,6 @@ spec:
             memory: 128Mi
           limits:
             memory: 256Mi
-      storage:
-        useAllNodes: true
-        useAllDevices: true
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -103,7 +131,7 @@ spec:
       isDefault: false
       deletionPolicy: Delete
     cephFileSystems:
-      - name: ceph-filesystem
+      - name: &cephFileSystemName ceph-filesystem
         spec:
           metadataPool:
             replicated:
@@ -117,16 +145,26 @@ spec:
             activeCount: 1
             activeStandby: true
             priorityClassName: system-cluster-critical
+            placement:
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: DoNotSchedule
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: ceph-mds
+                      app.kubernetes.io/part-of: *cephFileSystemName
             resources:
               requests:
                 cpu: 100m
                 memory: 1Gi
               limits:
-                memory: 3Gi
+                memory: 4Gi
         storageClass:
           enabled: true
           isDefault: false
           name: ceph-filesystem
+          pool: data0
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: Immediate
@@ -143,4 +181,47 @@ spec:
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores: []
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            hostNetwork: false
+            port: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
+            instances: 2
+            priorityClassName: system-cluster-critical
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          volumeBindingMode: Immediate
+          parameters:
+            region: us-east-1
+        ingress:
+          enabled: true
+          annotations:
+            external-dns.alpha.kubernetes.io/target: internal.maunder.co
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+            nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+          ingressClassName: internal
+          host:
+            name: rgw.int.maunder.co
+            path: /
