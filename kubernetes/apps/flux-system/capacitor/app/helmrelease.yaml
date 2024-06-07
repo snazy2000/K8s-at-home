@@ -59,7 +59,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.int.maunder.co"
+          - host: &host "{{ .Release.Name }}.maunder.co"
             paths:
               - path: /
                 service:
@@ -68,4 +68,3 @@ spec:
         tls:
           - hosts:
               - *host
-              
