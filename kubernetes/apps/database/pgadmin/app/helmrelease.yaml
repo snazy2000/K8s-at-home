@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      sonarr:
+      pgadmin:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -53,10 +53,10 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: sonarr
+        controller: pgadmin
         ports:
           http:
-            port: *port
+            port: &port 80
     ingress:
       app:
         annotations:
