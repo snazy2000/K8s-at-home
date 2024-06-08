@@ -33,7 +33,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/main/asecurity/external-secrets/stores
+  path: ./kubernetes/main/security/external-secrets/stores
   prune: true
   sourceRef:
     kind: GitRepository
