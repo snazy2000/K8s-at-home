@@ -72,7 +72,6 @@ spec:
             env:
               VPN_SERVICE_PROVIDER: ipvanish
               VPN_TYPE: openvpn
-              VPN_ENDPOINT_PORT: 51820
               FIREWALL_INPUT_PORTS: 8080
               FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12 # Allow access to k8s subnets
             envFrom:
