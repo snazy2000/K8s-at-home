@@ -38,7 +38,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.maunder.co
         ingressClassName: internal
         host:
-          name: rook.int.maunder.co
+          name: rook.lab.maunder.co
           path: /
     toolbox:
       enabled: true
@@ -223,5 +223,5 @@ spec:
             nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
           ingressClassName: internal
           host:
-            name: rgw.int.maunder.co
+            name: rgw.lab.maunder.co
             path: /
