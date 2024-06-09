@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr
+  name: prowlarr
 spec:
   interval: 30m
   chart:
@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      sonarr:
+      prowlarr:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -34,21 +34,21 @@ spec:
               tag: 16
             envFrom: &envFrom
               - secretRef:
-                  name: sonarr-secret
+                  name: prowlarr-secret
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.5.1719@sha256:602af44d766a8c7c494d01fb79f6e7624aed58f0b86ffe10e1ecad280160a3df
+              repository: ghcr.io/onedr0p/prowlarr-develop
+              tag: 1.18.0.4543@sha256:3b7016455028840cae468f1227560e84926c47d1d30b4f73c269704b3f97362f
             env:
-              SONARR__APP__INSTANCENAME: Sonarr
-              SONARR__APP__THEME: dark
-              SONARR__AUTH__METHOD: External
-              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              SONARR__LOG__DBENABLED: "False"
-              SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: &port 80
-              SONARR__UPDATE__BRANCH: develop
+              PROWLARR__APP__INSTANCENAME: Prowlarr
+              PROWLARR__APP__THEME: dark
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__SERVER__PORT: &port 80
+              PROWLARR__UPDATE__BRANCH: develop
               TZ: Europe/London
             envFrom: *envFrom
             probes:
@@ -71,6 +71,8 @@ spec:
             resources:
               requests:
                 cpu: 10m
+              limits:
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -78,18 +80,17 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: sonarr
+        controller: prowlarr
         ports:
           http:
             port: *port
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: lab.maunder.co
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.lab.maunder.co"
@@ -100,14 +101,6 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: sonarr
+        type: emptyDir
       tmp:
         type: emptyDir
-      media:
-        type: nfs
-        server: 192.168.1.100
-        path: /mnt/Data/Media/TV Shows
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /tvshows

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr
+  name: radarr
 spec:
   interval: 30m
   chart:
@@ -22,9 +22,12 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
-      sonarr:
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -34,21 +37,21 @@ spec:
               tag: 16
             envFrom: &envFrom
               - secretRef:
-                  name: sonarr-secret
+                  name: radarr-secret
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.5.1719@sha256:602af44d766a8c7c494d01fb79f6e7624aed58f0b86ffe10e1ecad280160a3df
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.6.0.8846@sha256:99c264af3f2d177e6674a9b304b64a35261202de30e54b35d5758d40edd94366
             env:
-              SONARR__APP__INSTANCENAME: Sonarr
-              SONARR__APP__THEME: dark
-              SONARR__AUTH__METHOD: External
-              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              SONARR__LOG__DBENABLED: "False"
-              SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: &port 80
-              SONARR__UPDATE__BRANCH: develop
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
               TZ: Europe/London
             envFrom: *envFrom
             probes:
@@ -71,6 +74,8 @@ spec:
             resources:
               requests:
                 cpu: 10m
+              limits:
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -82,14 +87,14 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: sonarr
+        controller: radarr
         ports:
           http:
             port: *port
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: lab.maunder.co
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.lab.maunder.co"
@@ -100,14 +105,14 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: sonarr
+        existingClaim: radarr
       tmp:
         type: emptyDir
       media:
         type: nfs
         server: 192.168.1.100
-        path: /mnt/Data/Media/TV Shows
+        path: /mnt/Data/Media/Movies
         advancedMounts:
           qbittorrent:
             app:
-              - path: /tvshows
+              - path: /movies
