@@ -93,7 +93,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.maunder.co
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.lab.maunder.co"
+          - host: "{{ .Release.Name }}.maunder.co"
             paths:
               - path: /
                 service:
