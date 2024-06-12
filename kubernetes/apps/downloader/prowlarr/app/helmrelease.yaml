@@ -37,6 +37,7 @@ spec:
                   name: prowlarr-secret
         containers:
           app:
+            nameOverride: prowlarr
             image:
               repository: ghcr.io/onedr0p/prowlarr-develop
               tag: 1.18.0.4543@sha256:3b7016455028840cae468f1227560e84926c47d1d30b4f73c269704b3f97362f
@@ -121,13 +122,13 @@ spec:
       config:
         type: emptyDir
         advancedMounts:
-          qbittorrent:
+          prowlarr:
             port-forward:
               - path: /config
       tmp:
         type: emptyDir
         advancedMounts:
-          qbittorrent:
+          prowlarr:
             port-forward:
               - path: /tmp
 
