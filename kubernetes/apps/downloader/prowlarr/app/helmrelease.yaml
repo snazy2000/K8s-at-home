@@ -73,6 +73,24 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.38.0
+            env:
+              VPN_SERVICE_PROVIDER: ipvanish
+              VPN_TYPE: openvpn
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: prowlarr-secret
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -102,6 +120,14 @@ spec:
     persistence:
       config:
         type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            port-forward:
+              - path: /config
       tmp:
         type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            port-forward:
+              - path: /tmp
 
