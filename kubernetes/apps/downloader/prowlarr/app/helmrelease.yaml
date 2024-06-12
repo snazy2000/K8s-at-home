@@ -120,10 +120,11 @@ spec:
                   port: http
     persistence:
       config:
-        type: emptyDir
+        enabled: true
+        existingClaim: prowlarr
         advancedMounts:
           prowlarr:
-            port-forward:
+            app:
               - path: /config
       tmp:
         type: emptyDir
