@@ -118,5 +118,5 @@ spec:
         type: nfs
         server: 192.168.1.100
         path: /mnt/Data/Downloads
-          globalMounts:
+        globalMounts:
           - path: /downloads
