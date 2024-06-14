@@ -130,6 +130,8 @@ spec:
       name: csi-ceph-blockpool
       isDefault: false
       deletionPolicy: Delete
+      annotations:
+        k10.kasten.io/is-snapshot-class: "true"
     cephFileSystems:
       - name: &cephFileSystemName ceph-filesystem
         spec:
