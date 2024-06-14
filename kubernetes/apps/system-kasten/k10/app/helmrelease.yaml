@@ -26,7 +26,4 @@ spec:
       create: true
       class: internal
       host: k10.maunder.co
-    services:
-      securityContext:
-        runAsUser: 2000
 
