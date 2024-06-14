@@ -96,7 +96,6 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
-
     service:
       app:
         controller: prowlarr
