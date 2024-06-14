@@ -19,3 +19,7 @@ spec:
       interval: 5m
   values:
     clusterName: home-k8s
+    ingress:
+      create: true
+      class: internal
+      host: k10.maunder.co
