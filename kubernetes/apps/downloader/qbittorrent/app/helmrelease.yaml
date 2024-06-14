@@ -67,7 +67,7 @@ spec:
               VPN_SERVICE_PROVIDER: ipvanish
               VPN_TYPE: openvpn
               FIREWALL_INPUT_PORTS: 8080
-              FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12 # Allow access to k8s subnets
+              FIREWALL_OUTBOUND_SUBNETS: 10.0.0.0/8 # Allow access to k8s subnets
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
