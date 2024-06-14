@@ -19,6 +19,9 @@ spec:
       interval: 5m
   values:
     clusterName: home-k8s
+    auth:
+      tokenAuth:
+        enabled: true
     ingress:
       create: true
       class: internal
