@@ -20,8 +20,9 @@ spec:
   values:
     clusterName: home-k8s
     auth:
-      tokenAuth:
+      basicAuth:
         enabled: true
+        secretName: k10-secret
     ingress:
       create: true
       class: internal
