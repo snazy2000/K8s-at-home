@@ -183,6 +183,8 @@ spec:
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
+      annotations:
+        k10.kasten.io/is-snapshot-class: "true"
     cephObjectStores:
       - name: ceph-objectstore
         spec:
