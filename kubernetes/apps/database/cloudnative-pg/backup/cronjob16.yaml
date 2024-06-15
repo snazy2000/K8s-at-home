@@ -29,6 +29,8 @@ spec:
               - secretRef:
                   name: postgresbackup-secret
               env:
+                - name: POSTGRES_HOST
+                  value: postgres16-ro.databases.svc.cluster.local
                 - name: POSTGRES_DB
                   value: 'postgres'
                 - name: POSTGRES_CLUSTER
