@@ -27,7 +27,7 @@ spec:
                 - '/backup.sh'
               envFrom: &envFrom
               - secretRef:
-                  name: posgresbackup-secret
+                  name: postgresbackup-secret
               env:
                 - name: POSTGRES_DB
                   value: 'postgres'
