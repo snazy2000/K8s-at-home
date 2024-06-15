@@ -35,6 +35,8 @@ spec:
                   value: 'postgres'
                 - name: POSTGRES_CLUSTER
                   value: 'TRUE'
+                - name: POSTGRES_EXTRA_OPTS
+                  value: ''
                 - name: BACKUP_KEEP_MINS
                   value: '1440'
                 - name: TZ
