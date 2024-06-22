@@ -9,3 +9,4 @@ resources:
   - ./onepassword-connect/ks.yaml
   - ./external-secrets/ks.yaml
   - ./lldap/ks.yaml
+  - ./authelia/ks.yaml
