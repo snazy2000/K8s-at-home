@@ -125,8 +125,8 @@ spec:
 
     persistence:
       config:
-        type: secret
-        name: authelia-secret
+        type: configMap
+        name: authelia-configmap
         globalMounts:
           - path: /config/configuration.yaml
             subPath: configuration.yaml
