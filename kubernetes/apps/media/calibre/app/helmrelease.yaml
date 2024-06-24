@@ -27,6 +27,14 @@ spec:
       calibre:
         annotations:
           reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+
         containers:
           app:
             image:
