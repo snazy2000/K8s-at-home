@@ -37,9 +37,6 @@ spec:
               PUID: 2000
               PGID: 2000
               CUSTOM_PORT: &port 80
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
