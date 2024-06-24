@@ -138,4 +138,4 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /data/downloads
+              - path: /downloads
