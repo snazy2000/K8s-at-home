@@ -34,6 +34,7 @@ spec:
               tag: v7.12.0-ls287@sha256:adb140df0504f134e53f230c96a0cc373ef268bd2a52639ce6e7f536b5b39ad7
             env:
               TZ: Europe/London
+              CUSTOM_PORT: &port 80
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -67,7 +68,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: 8080
+                  port: http
     persistence:
       config:
         existingClaim: calibre
