@@ -46,6 +46,8 @@ spec:
         ports:
           http:
             port: *port
+          httpweb:
+            port: 8081
     ingress:
       app:
         annotations:
