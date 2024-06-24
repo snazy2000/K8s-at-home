@@ -39,7 +39,6 @@ spec:
               CUSTOM_PORT: &port 80
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
