@@ -106,8 +106,8 @@ spec:
         server: "192.168.1.100"
         path: "/mnt/Data/Backup/vaultwarden"
         advancedMounts:
-          backups-job:
-            app:
+          vaultwarden:
+            backups-job:
               - path: /backups
     defaultPodOptions:
       annotations:
