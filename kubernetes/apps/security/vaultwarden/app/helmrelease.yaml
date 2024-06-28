@@ -74,7 +74,7 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 2Gi
-          backups:
+          backups-job:
             # Restore with:
             #   gpg --decrypt backup.tar.xz.gpg > backup.tar.xz
             #   tar -xJvf ./backup/data.tar.xz -C /data/
@@ -106,7 +106,7 @@ spec:
         server: "192.168.1.100"
         path: "/mnt/Data/Backup/vaultwarden"
         advancedMounts:
-          backups:
+          backups-job:
             app:
               - path: /backups
     defaultPodOptions:
