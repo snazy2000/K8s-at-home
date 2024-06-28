@@ -90,7 +90,6 @@ spec:
               BACKUP_ON_STARTUP: true
               GID: 2000
               UID: 2000
-          defaultPodOptions:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
