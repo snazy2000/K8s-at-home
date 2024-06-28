@@ -85,7 +85,7 @@ spec:
               TIMESTAMP: true
               DELETE_AFTER: 30
               CRON_TIME: "0 * * * *"
-              ENCRYPTION_PASSWORD: "${VAULTWARDEN_BACKUP_PASS}"
+              ENCRYPTION_PASSWORD: "123456"
               BACKUP_DIR: '/backups'
               BACKUP_ON_STARTUP: true
               GID: 2000
