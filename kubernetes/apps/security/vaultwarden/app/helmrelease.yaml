@@ -51,8 +51,8 @@ spec:
               REQUIRE_DEVICE_EMAIL: "true"
               SHOW_PASSWORD_HINT: "false"
               SMTP_HOST: smtp-relay.network.svc.cluster.local
-              SMTP_FROM: vaultwarden@${SECRET_DOMAIN}
-              SMTP_FROM_NAME: vaultwarden@${SECRET_DOMAIN}
+              SMTP_FROM: "vaultwarden@maunder.co"
+              SMTP_FROM_NAME: "vaultwarden@maunder.co"
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
             probes:
