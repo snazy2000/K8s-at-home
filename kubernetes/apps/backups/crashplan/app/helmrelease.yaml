@@ -36,7 +36,7 @@ spec:
             env:
               TZ: Europe/London
               KEEP_APP_RUNNING: 1
-              VNC_PASSWORD:
+              VNC_PASSWORD: test
               USER_ID: 0
               GROUP_ID: 0
     service:
