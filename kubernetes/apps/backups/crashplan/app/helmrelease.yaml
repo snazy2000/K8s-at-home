@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: calibre
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      crashplan:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: jlesage/crashplan-pro
+              tag: v24.01.1
+            env:
+              TZ: Europe/London
+              KEEP_APP_RUNNING: 1
+              VNC_PASSWORD:
+              USER_ID: 0
+              GROUP_ID: 0
+    service:
+      app:
+        controller: crashplan
+        ports:
+          http:
+            port: 5800
+          httpweb:
+            port: 5900
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: maunder.co
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.maunder.co"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: crashplan
+      tmp:
+        type: emptyDir
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Pictures
+        globalMounts:
+          - path: /pictures
+            readOnly: true
