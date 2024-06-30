@@ -109,3 +109,9 @@ spec:
         path: /mnt/Data/Media/TV Shows
         globalMounts:
           - path: /tvshows
+      downloads:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Downloads
+        globalMounts:
+          - path: /downloads
