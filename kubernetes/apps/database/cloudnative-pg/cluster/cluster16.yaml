@@ -6,13 +6,15 @@ metadata:
   name: postgres16
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.3-7
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.3.0
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
     storageClass: openebs-hostpath
   enableSuperuserAccess: true
   postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
