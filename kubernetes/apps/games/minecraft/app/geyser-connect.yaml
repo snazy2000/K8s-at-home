@@ -94,10 +94,8 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteMany
-        size: 1Gi
-        storageClass: ceph-filesystem
-        retain: true
-        globalMounts:
-          - path: /var/lib/geyser
+        existingClaim: geyser-connect
+        advancedMounts:
+          geyser-connect:
+            geyser-connect:
+              - path: /var/lib/geyser
