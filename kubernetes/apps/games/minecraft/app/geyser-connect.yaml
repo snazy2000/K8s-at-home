@@ -30,8 +30,8 @@ spec:
         containers:
           geyser-connect:
             image:
-              repository: ghcr.io/jokajak/geyser-mc
-              tag: 2.3.0-2
+              repository: bmoorman/geyser
+              tag: latest
             probes:
               liveness:
                 enabled: false
@@ -64,10 +64,6 @@ spec:
                 cpu: 1000m
               limits:
                 memory: 1Gi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
