@@ -95,10 +95,9 @@ spec:
       config:
         enabled: true
         type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClass: ceph-filesystem
         retain: true
         globalMounts:
           - path: /var/lib/geyser
-            readOnly: false
