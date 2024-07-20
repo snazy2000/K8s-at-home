@@ -132,7 +132,4 @@ spec:
         advancedMounts:
           paperless:
             app:
-              - subPath: incoming
-                path: /data/nas/consume
-              - subPath: export
-                path: /data/nas/export
+              - path: /data/nas
