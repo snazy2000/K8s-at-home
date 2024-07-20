@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: cloudnative-pg
-  path: ./kubernetes/apps/media/paperless-ngx/app
+  path: ./kubernetes/apps/media/paperless/app
   prune: true
   sourceRef:
     kind: GitRepository
