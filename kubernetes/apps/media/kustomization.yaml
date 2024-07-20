@@ -9,4 +9,4 @@ resources:
   - ./calibre/ks.yaml
   - ./calibre-web/ks.yaml
   - ./immich/ks.yaml
-  - ./paperless-ngx/ks.yaml
+  - ./paperless/ks.yaml
