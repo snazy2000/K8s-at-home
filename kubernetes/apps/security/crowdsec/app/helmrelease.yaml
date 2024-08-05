@@ -1,0 +1,175 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app crowdsec
+spec:
+  chart:
+    spec:
+      chart: crowdsec
+      version: 0.11.0
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: flux-system
+  interval: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths:
+          - /spec/containers/resources/limits
+        target:
+          kind: Pod
+  values:
+    # -- for raw logs format: json or cri (docker|containerd)
+    container_runtime: containerd
+
+    image:
+      # -- docker image repository name
+      repository: ghcr.io/crowdsecurity/crowdsec
+      tag: v1.6.2@sha256:831b5849982653a78f51557d3da10e8571b9801db1d57b3735355cdb0c3dd5c9
+      # -- pullPolicy
+      pullPolicy: IfNotPresent
+      # -- docker image tag
+
+    # lapi (local api) will deploy pod with crowdsec lapi and dashboard as deployment
+    lapi:
+      env:
+        - name: TZ
+          value: 'Europe/London'
+        ### by default disable the agent for local API pods --> this is set in lapi-deployment helm template
+        # - name: DISABLE_AGENT
+        #   value: "true"
+        # # If it's a test, we don't want to share signals with CrowdSec so disable the Online API.
+        # - name: DISABLE_ONLINE_API
+        #   value: "true"
+        - name: ENROLL_KEY
+          valueFrom:
+            secretKeyRef:
+              name: crowdsec-secret
+              key: ENROLL_KEY
+        - name: ENROLL_INSTANCE_NAME
+          value: k8s_cluster
+        # - name: ENROLL_TAGS
+        #   value: "k8s linux test"
+        - name: BOUNCER_KEY_INGRESS
+          valueFrom:
+            secretKeyRef:
+              name: crowdsec-secret
+              key: BOUNCER_KEY_INGRESS
+
+      dashboard:
+        # -- Enable Metabase Dashboard (by default disabled)
+        enabled: false
+
+      resources:
+        requests:
+          cpu: 150m
+          memory: 100M
+        limits:
+          memory: 100M
+
+      # -- Enable persistent volumes
+      persistentVolume:
+        # -- Persistent volume for data folder. Stores e.g. registered bouncer api keys
+        data:
+          enabled: true
+          accessModes:
+            - ReadWriteMany
+          storageClassName: ceph-filesystem
+          size: 1Gi
+        # -- Persistent volume for config folder. Stores e.g. online api credentials
+        config:
+          enabled: true
+          accessModes:
+            - ReadWriteMany
+          storageClassName: ceph-filesystem
+          size: 100Mi
+
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: "true"
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+
+      # -- Enable service monitoring (exposes "metrics" port "6060" for Prometheus)
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
+    # agent will deploy pod on every node as daemonSet to read wanted pods logs
+    agent:
+      acquisition:
+        # -- Specify each pod you want to process it logs (namespace, podName and program)
+        - namespace: network
+          podName: ingress-nginx-external-controller-*
+          program: nginx
+      resources:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 150m
+          memory: 100Mi
+      # -- Enable persistent volumes
+      persistentVolume:
+        # -- Persistent volume for config folder. Stores local config (parsers, scenarios etc.)
+        config:
+          enabled: true
+          accessModes:
+            - ReadWriteMany
+          storageClassName: ceph-filesystem
+          size: 100Mi
+      # -- environment variables from crowdsecurity/crowdsec docker image
+      env:
+        - name: TZ
+          value: 'Europe/London'
+        # # default disable local API on the agent pod --> this is set in agent-daemonset helm template
+        # - name: DISABLE_ONLINE_API
+        #   value: "false"
+        # - name: LEVEL_TRACE
+        #   value: "false"
+        # - name: LEVEL_DEBUG
+        #   value: "false"
+        # - name: LEVEL_INFO
+        #   value: "false"
+
+        ### "Parsers and Scenarios must be present on the agents. It's not useful to deploy them on LAPI"
+        # COLLECTIONS are bundles of PARSERS and SCENARIOS
+        - name: COLLECTIONS
+          value: >-
+            crowdsecurity/linux
+            crowdsecurity/sshd
+            crowdsecurity/nginx
+            crowdsecurity/base-http-scenarios
+            crowdsecurity/http-cve
+            crowdsecurity/pgsql
+
+        - name: PARSERS
+          # https://hub.crowdsec.net/author/crowdsecurity/configurations/cri-logs
+          # https://hub.crowdsec.net/author/crowdsecurity/configurations/docker-logs
+          value: >-
+            crowdsecurity/cri-logs
+            crowdsecurity/docker-logs
+
+        # - name: SCENARIOS
+        #   value: |
+      # -- tolerations for agent
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+
+      # -- Enable service monitoring (exposes "metrics" port "6060" for Prometheus)
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true

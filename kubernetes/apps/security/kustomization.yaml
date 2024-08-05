@@ -11,3 +11,4 @@ resources:
   - ./lldap/ks.yaml
   - ./authelia/ks.yaml
   - ./vaultwarden/ks.yaml
+  - ./crowdsec/ks.yaml
