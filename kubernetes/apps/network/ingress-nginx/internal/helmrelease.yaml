@@ -79,7 +79,10 @@ spec:
             - name: API_URL
               value: "http://crowdsec-service.security.svc.cluster.local:8080"
             - name: API_KEY
-              value: "test"
+              valueFrom:
+                secretKeyRef:
+                  name: API_KEY
+                  key: BOUNCER_KEY_INGRESS
             - name: BOUNCER_CONFIG
               value: "/crowdsec/crowdsec-bouncer.conf"
             - name: MODE
