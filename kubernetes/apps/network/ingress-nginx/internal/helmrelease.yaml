@@ -72,7 +72,7 @@ spec:
       extraInitContainers:
         - name: init-pihole
           image: busybox
-          command: ['sh', '-c', 'until nslookup pihole; do echo waiting for pihole; sleep 2; done;']
+          command: ['sh', '-c', 'until nslookup pihole-web; do echo waiting for pihole; sleep 2; done;']
           volumeMounts:
             - name: crowdsec-bouncer-plugin
               mountPath: /lua_plugins
