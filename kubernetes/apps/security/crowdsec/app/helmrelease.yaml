@@ -111,6 +111,12 @@ spec:
         - namespace: security
           podName: vaultwarden-*
           program: Vaultwarden
+        - namespace: security
+          podName: authelia-*
+          program: authelia
+        - namespace: media
+          podName: immich-server-*
+          program: immich
       resources:
         limits:
           memory: 100Mi
@@ -151,6 +157,8 @@ spec:
             crowdsecurity/http-cve
             crowdsecurity/pgsql
             Dominic-Wagner/vaultwarden
+            LePresidente/authelia
+            gauth-fr/immich
 
         - name: PARSERS
           # https://hub.crowdsec.net/author/crowdsecurity/configurations/cri-logs
