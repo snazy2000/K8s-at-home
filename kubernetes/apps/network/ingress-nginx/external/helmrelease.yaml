@@ -118,3 +118,4 @@ spec:
           value: connection
         - name: SHOW_DETAILS
           value: "true"
+
