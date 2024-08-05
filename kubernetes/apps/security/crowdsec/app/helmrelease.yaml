@@ -108,6 +108,9 @@ spec:
         - namespace: network
           podName: ingress-nginx-external-controller-*
           program: nginx
+        - namespace: security
+          podName: vaultwarden-*
+          program: Vaultwarden
       resources:
         limits:
           memory: 100Mi
@@ -147,6 +150,7 @@ spec:
             crowdsecurity/base-http-scenarios
             crowdsecurity/http-cve
             crowdsecurity/pgsql
+            Dominic-Wagner/vaultwarden
 
         - name: PARSERS
           # https://hub.crowdsec.net/author/crowdsecurity/configurations/cri-logs
