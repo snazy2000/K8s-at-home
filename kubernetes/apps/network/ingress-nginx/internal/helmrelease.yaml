@@ -70,12 +70,6 @@ spec:
         - name: crowdsec-bouncer-plugin
           emptyDir: { }
       extraInitContainers:
-        - name: init-pihole
-          image: busybox
-          command: ['sh', '-c', 'until nslookup pihole-web.network.svc.cluster.local; do echo waiting for pihole; sleep 2; done;']
-          volumeMounts:
-            - name: crowdsec-bouncer-plugin
-              mountPath: /lua_plugins
         - name: init-clone-crowdsec-bouncer
           image: crowdsecurity/lua-bouncer-plugin:v1.0.2
           imagePullPolicy: IfNotPresent
@@ -94,7 +88,10 @@ spec:
               value: "/crowdsec/crowdsec-bouncer.conf"
             - name: BAN_TEMPLATE_PATH
               value: /etc/nginx/lua/plugins/crowdsec/templates/ban.html
-          command: [ 'sh', '-c', "sh /docker_start.sh; mkdir -p /lua_plugins/crowdsec/; cp -R /crowdsec/* /lua_plugins/crowdsec/" ]
+          command: [ 'sh', '-c', "apk update; apk add bash; bash /docker_start.sh; mkdir -p /lua_plugins/crowdsec/; cp -R /crowdsec/* /lua_plugins/crowdsec/" ]
+          volumeMounts:
+            - name: crowdsec-bouncer-plugin
+              mountPath: /lua_plugins
       extraVolumeMounts:
         - name: crowdsec-bouncer-plugin
           mountPath: /etc/nginx/lua/plugins/crowdsec
