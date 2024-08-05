@@ -27,30 +27,30 @@ spec:
     fullnameOverride: ingress-nginx-external
     controller:
       extraVolumes:
-        - name: crowdsec-bouncer-plugin
-          emptyDir: {}
+      - name: crowdsec-bouncer-plugin
+        emptyDir: {}
       extraInitContainers:
-        - name: init-clone-crowdsec-bouncer
-          image: crowdsecurity/lua-bouncer-plugin
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: API_URL
-              value: "http://crowdsec-service.security.svc.cluster.local:8080"
-            - name: API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: API_KEY
-                  key: BOUNCER_KEY_INGRESS
-            - name: BOUNCER_CONFIG
-              value: "/crowdsec/crowdsec-bouncer.conf"
-          command: ['sh', '-c', "sh /docker_start.sh; mkdir -p /lua_plugins/crowdsec/; cp -R /crowdsec/* /lua_plugins/crowdsec/"]
-          volumeMounts:
-            - name: crowdsec-bouncer-plugin
-              mountPath: /lua_plugins
+      - name: init-clone-crowdsec-bouncer
+        image: crowdsecurity/lua-bouncer-plugin
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: API_URL
+            value: "http://crowdsec-service.security.svc.cluster.local:8080"
+          - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: API_KEY
+                key: BOUNCER_KEY_INGRESS
+          - name: BOUNCER_CONFIG
+            value: "/crowdsec/crowdsec-bouncer.conf"
+        command: ['sh', '-c', "sh /docker_start.sh; mkdir -p /lua_plugins/crowdsec/; cp -R /crowdsec/* /lua_plugins/crowdsec/"]
+        volumeMounts:
+          - name: crowdsec-bouncer-plugin
+            mountPath: /lua_plugins
       extraVolumeMounts:
-        - name: crowdsec-bouncer-plugin
-          mountPath: /etc/nginx/lua/plugins/crowdsec
-          subPath: crowdsec
+      - name: crowdsec-bouncer-plugin
+        mountPath: /etc/nginx/lua/plugins/crowdsec
+        subPath: crowdsec
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
