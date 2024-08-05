@@ -95,12 +95,6 @@ spec:
           storageClassName: ceph-filesystem
           size: 100Mi
 
-      nodeSelector:
-        node-role.kubernetes.io/control-plane: "true"
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-
       # -- Enable service monitoring (exposes "metrics" port "6060" for Prometheus)
       metrics:
         enabled: true
@@ -161,12 +155,6 @@ spec:
             crowdsecurity/cri-logs
             crowdsecurity/docker-logs
 
-        # - name: SCENARIOS
-        #   value: |
-      # -- tolerations for agent
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
 
       # -- Enable service monitoring (exposes "metrics" port "6060" for Prometheus)
       metrics:
