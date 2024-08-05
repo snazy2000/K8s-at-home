@@ -67,6 +67,8 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
+        plugins: "crowdsec"
+        lua-shared-dicts: "crowdsec_cache: 50m"
       metrics:
         enabled: true
         serviceMonitor:
@@ -79,6 +81,29 @@ spec:
       extraVolumes:
         - name: crowdsec-bouncer-plugin
           emptyDir: { }
+      extraInitContainers:
+        - name: init-clone-crowdsec-bouncer
+          image: crowdsecurity/lua-bouncer-plugin:v1.0.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: API_URL
+              value: "http://crowdsec-service.security.svc.cluster.local:8080"
+            - name: API_KEY
+              value: "test"
+            - name: BOUNCER_CONFIG
+              value: "/crowdsec/crowdsec-bouncer.conf"
+            - name: MODE
+              value: "stream"
+            - name: UPDATE_FREQUENCY
+              value: "10" # 10 seconds
+            - name: BOUNCER_CONFIG
+              value: "/crowdsec/crowdsec-bouncer.conf"
+            - name: BAN_TEMPLATE_PATH
+              value: /etc/nginx/lua/plugins/crowdsec/templates/ban.html
+          command: [ 'sh', '-c', "apk update; apk add bash; bash /docker_start.sh; mkdir -p /lua_plugins/crowdsec/; cp -R /crowdsec/* /lua_plugins/crowdsec/" ]
+          volumeMounts:
+            - name: crowdsec-bouncer-plugin
+              mountPath: /lua_plugins
       extraVolumeMounts:
         - name: crowdsec-bouncer-plugin
           mountPath: /etc/nginx/lua/plugins/crowdsec
