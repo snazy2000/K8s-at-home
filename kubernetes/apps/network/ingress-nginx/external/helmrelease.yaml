@@ -35,12 +35,6 @@ spec:
         name: external
         default: false
         controllerValue: k8s.io/external
-      admissionWebhooks:
-        objectSelector:
-          matchExpressions:
-            - key: ingress-class
-              operator: In
-              values: ["external"]
       config:
         # tarampampam/error-pages
         custom-http-errors: >-
