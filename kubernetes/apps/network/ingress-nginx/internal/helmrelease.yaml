@@ -81,7 +81,7 @@ spec:
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: API_KEY
+                  name: crowdsec-secret
                   key: BOUNCER_KEY_INGRESS
             - name: BOUNCER_CONFIG
               value: "/crowdsec/crowdsec-bouncer.conf"
