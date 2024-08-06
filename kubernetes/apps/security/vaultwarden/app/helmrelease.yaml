@@ -85,11 +85,13 @@ spec:
               TIMESTAMP: true
               DELETE_AFTER: 30
               CRON_TIME: "0 * * * *"
-              ENCRYPTION_PASSWORD: "test"
               BACKUP_DIR: '/backups'
               BACKUP_ON_STARTUP: true
               GID: 0
               UID: 0
+              envFrom:
+              - secretRef:
+                  name: vaultwarden-secret
             securityContext:
               runAsNonRoot: false
               runAsUser: 0
