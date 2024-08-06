@@ -41,8 +41,8 @@ spec:
               ATTACHMENTS_FOLDER: "data/attachments"
               DOMAIN: "https://bw.${SECRET_DOMAIN}"
               TZ: "Europe/London"
-              SIGNUPS_ALLOWED: "true"
-              INVITATIONS_ALLOWED: "true"
+              SIGNUPS_ALLOWED: "false"
+              INVITATIONS_ALLOWED: "false"
               ORG_EVENTS_ENABLED: "true"
               PASSWORD_ITERATIONS: "321000"
               EVENTS_DAYS_RETAIN: "730"
@@ -104,7 +104,7 @@ spec:
       backups:
         type: nfs
         server: 192.168.1.100
-        path: /mnt/Data/Backup/vaultwarden
+        path: /mnt/Data/Backup/vault
         globalMounts:
           - path: /backups
     defaultPodOptions:
