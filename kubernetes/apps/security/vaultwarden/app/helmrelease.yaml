@@ -50,11 +50,15 @@ spec:
               WEBSOCKET_ADDRESS: 0.0.0.0
               REQUIRE_DEVICE_EMAIL: "true"
               SHOW_PASSWORD_HINT: "false"
+              PUSH_ENABLED: "true"
               SMTP_HOST: smtp-relay.network.svc.cluster.local
               SMTP_FROM: "vaultwarden@maunder.co"
               SMTP_FROM_NAME: "vaultwarden@maunder.co"
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
+              envFrom:
+                - secretRef:
+                  name: vaultwarden-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -90,7 +94,7 @@ spec:
               GID: 0
               UID: 0
               envFrom:
-              - secretRef:
+                - secretRef:
                   name: vaultwarden-secret
             securityContext:
               runAsNonRoot: false
