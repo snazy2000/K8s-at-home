@@ -56,9 +56,9 @@ spec:
               SMTP_FROM_NAME: "vaultwarden@maunder.co"
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
-                name: vaultwarden-secret
+                  name: vaultwarden-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -93,9 +93,7 @@ spec:
               BACKUP_ON_STARTUP: true
               GID: 0
               UID: 0
-            envFrom:
-              - secretRef:
-                name: vaultwarden-secret
+            envFrom: *envFrom
             securityContext:
               runAsNonRoot: false
               runAsUser: 0
