@@ -88,8 +88,8 @@ spec:
               ENCRYPTION_PASSWORD: "test"
               BACKUP_DIR: '/backups'
               BACKUP_ON_STARTUP: true
-              GID: 2000
-              UID: 2000
+              GID: 0
+              UID: 0
     service:
       app:
         controller: vaultwarden
