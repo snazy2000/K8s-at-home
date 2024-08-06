@@ -56,6 +56,8 @@ spec:
               SMTP_FROM_NAME: "vaultwarden@maunder.co"
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
+              PUSH_RELAY_URI: "https://api.bitwarden.eu"
+              PUSH_IDENTITY_URI: "https://identity.bitwarden.eu"
             envFrom: &envFrom
               - secretRef:
                   name: vaultwarden-secret
