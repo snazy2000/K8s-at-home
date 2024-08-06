@@ -90,6 +90,11 @@ spec:
               BACKUP_ON_STARTUP: true
               GID: 0
               UID: 0
+            securityContext:
+              runAsNonRoot: false
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
     service:
       app:
         controller: vaultwarden
