@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2024-07-31T05-46-26Z@sha256:9eea83a4e1425067e7b768397756efad19d36fc1c710808b8e1072236e8806c7
+              tag: RELEASE.2024-08-03T04-33-23Z@sha256:63edbc62147642bd8432710ff58afee5f302b33202302b684c9a14f669b38431
             env:
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.maunder.co,https://s3.maunder.co
               MINIO_BROWSER_REDIRECT_URL: https://minio.maunder.co
@@ -42,9 +42,6 @@ spec:
               MINIO_STORAGE_CLASS_RRS: EC:0
               MINIO_STORAGE_CLASS_STANDARD: EC:0
               MINIO_UPDATE: "off"
-            envFrom:
-              - secretRef:
-                  name: minio-secret
             args: ["server", "/data", "--console-address", ":9001"]
             probes:
               liveness: &probes
