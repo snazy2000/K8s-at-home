@@ -24,3 +24,4 @@ resources:
   - ./itzg-minecraft-server-charts.yaml
   - ./mojo2600.yaml
   - ./crowdsec.yaml
+  - ./backube.yaml
