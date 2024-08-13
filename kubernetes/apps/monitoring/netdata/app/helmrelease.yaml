@@ -24,15 +24,13 @@ spec:
       retries: 3
   values:
     parent:
-      envFrom:
-        - secretRef:
-          name: netdata-secret
+      envFrom: &envFrom
+      - secretRef:
+        name: netdata-secret
       claiming:
         enabled: true
 
     child:
-      envFrom:
-        - secretRef:
-          name: netdata-secret
+      envFrom: *envFrom
       claiming:
         enabled: true
