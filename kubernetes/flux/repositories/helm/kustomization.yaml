@@ -25,3 +25,4 @@ resources:
   - ./mojo2600.yaml
   - ./crowdsec.yaml
   - ./backube.yaml
+  - ./netdata.yaml
