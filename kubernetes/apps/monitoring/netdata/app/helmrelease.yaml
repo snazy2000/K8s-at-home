@@ -22,3 +22,16 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  values:
+    parent:
+      claiming:
+        enabled: true
+        envFrom:
+          - secretRef:
+              name: netdata-secret
+    child:
+      claiming:
+        enabled: true
+        envFrom:
+          - secretRef:
+              name: netdata-secret
