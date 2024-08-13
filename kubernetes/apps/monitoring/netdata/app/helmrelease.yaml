@@ -34,3 +34,4 @@ spec:
       envFrom: *envFrom
       claiming:
         enabled: true
+
