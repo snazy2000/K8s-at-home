@@ -71,3 +71,10 @@ spec:
         globalMounts:
           - path: /storage/Pictures
             readOnly: true
+      immich:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media/Photos
+        globalMounts:
+          - path: /storage/Immich
+            readOnly: true

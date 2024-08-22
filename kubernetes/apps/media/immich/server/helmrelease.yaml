@@ -70,3 +70,9 @@ spec:
         path: /mnt/Data/Media/Photos
         globalMounts:
           - path: /usr/src/app/upload
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Pictures
+        globalMounts:
+          - path: /storage/Pictures
