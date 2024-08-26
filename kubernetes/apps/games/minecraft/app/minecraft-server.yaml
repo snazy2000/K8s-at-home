@@ -91,8 +91,11 @@ spec:
               REMOVE_OLD_MODS: 'true'
               MODRINTH_DEFAULT_VERSION_TYPE: release
               MODRINTH_PROJECTS: >
+                fabric-api,
+                fabricexporter,
                 spark,
                 bluemap,
+                bluemap-sign-markers,
                 geyser:beta,
                 floodgate:beta
               # https://vanillatweaks.net/share#oNYxlz
@@ -132,7 +135,7 @@ spec:
       minecraft:
         controller: minecraft
         type: LoadBalancer    # https://kubernetes.io/blog/2022/05/23/service-ip-dynamic-and-static-allocation/
-        clusterIP: 192.168.1.196 # FIXME: Remove if/when playit supports hostname tunnel endpoints
+        clusterIP: 192.168.1.196
         ports:
           java:
             port: 25565
