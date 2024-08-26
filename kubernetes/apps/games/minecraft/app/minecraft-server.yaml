@@ -67,7 +67,7 @@ spec:
               ## General
               EULA: 'true'
               SERVER_NAME: 'MPOF'
-              TYPE: FABRIC
+              TYPE: PAPER
               FORCE_REDOWNLOAD: 'true'
 
               # renovate: depName=minecraft datasource=custom.minecraft versioning=semver-coerced
@@ -91,8 +91,6 @@ spec:
               REMOVE_OLD_MODS: 'true'
               MODRINTH_DEFAULT_VERSION_TYPE: release
               MODRINTH_PROJECTS: >
-                fabric-api,
-                fabricexporter,
                 spark,
                 bluemap,
                 bluemap-sign-markers,
