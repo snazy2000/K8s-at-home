@@ -204,3 +204,11 @@ spec:
           - path: /data/config/Geyser-Fabric/config.yml
             subPath: config.yml
             readOnly: true
+      floodgate:
+        type: configMap
+        name: floodgate-config
+        globalMounts:
+          - path: /data/config/floodgate/config.yml
+            subPath: config.yml
+            readOnly: true
+
