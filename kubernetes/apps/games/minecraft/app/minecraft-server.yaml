@@ -67,7 +67,7 @@ spec:
               ## General
               EULA: 'true'
               SERVER_NAME: 'MPOF'
-              TYPE: PAPER
+              TYPE: FABRIC
               FORCE_REDOWNLOAD: 'true'
 
               # renovate: depName=minecraft datasource=custom.minecraft versioning=semver-coerced
@@ -93,7 +93,6 @@ spec:
               MODRINTH_PROJECTS: >
                 spark,
                 bluemap,
-                bluemap-sign-markers,
                 geyser:beta,
                 floodgate:beta
               # https://vanillatweaks.net/share#oNYxlz
