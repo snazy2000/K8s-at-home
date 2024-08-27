@@ -90,6 +90,7 @@ spec:
               ## Mods
               REMOVE_OLD_MODS: 'true'
               MODRINTH_DEFAULT_VERSION_TYPE: release
+              ENABLE_WHITELIST: 'false'
               MODRINTH_PROJECTS: >
                 fabric-api,
                 fabricexporter,
