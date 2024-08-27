@@ -58,6 +58,8 @@ player-link:
   # you have limited internet access.
   enable-global-linking: true
 
+metrics:
+  enabled: false
 
 # Do not change this
 config-version: 3
