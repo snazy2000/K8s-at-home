@@ -77,7 +77,7 @@ spec:
               SPAWN_PROTECTION: 0
               SEED: '-3328679167992341530'
               FORCE_REDOWLOAD: 'true'
-              ENABLE_WHITELIST: 'true'
+              ENABLE_WHITELIST: 'false'
               # Logging
               ENABLE_ROLLING_LOGS: 'true'
               LOG_TIMESTAMP: 'true'
@@ -90,7 +90,6 @@ spec:
               ## Mods
               REMOVE_OLD_MODS: 'true'
               MODRINTH_DEFAULT_VERSION_TYPE: release
-              ENABLE_WHITELIST: 'false'
               MODRINTH_PROJECTS: >
                 fabric-api,
                 fabricexporter,
