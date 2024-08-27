@@ -76,6 +76,8 @@ spec:
               DIFFICULTY: easy
               SPAWN_PROTECTION: 0
               SEED: '-3328679167992341530'
+              ONLINE_MODE: 'false'
+              MODE: 'creative'
               FORCE_REDOWLOAD: 'true'
               ENABLE_WHITELIST: 'false'
               # Logging
