@@ -66,7 +66,7 @@ spec:
               # Server Configuration
               ## General
               EULA: 'true'
-              SERVER_NAME: 'MPOF'
+              SERVER_NAME: 'Maunder Kids'
               TYPE: FABRIC
               FORCE_REDOWNLOAD: 'true'
 
@@ -75,7 +75,7 @@ spec:
               MOTD: 'Play Nice!'
               DIFFICULTY: easy
               SPAWN_PROTECTION: 0
-              SEED: '-2135836821937050197'
+              SEED: '-3328679167992341530'
               FORCE_REDOWLOAD: 'true'
               ENABLE_WHITELIST: 'true'
               # Logging
@@ -107,13 +107,6 @@ spec:
                     name: minecraft-secret
                     key: rcon_password
               ENABLE_QUERY: 'true'
-              # Whitelist / Ops
-              WHITELIST:
-                valueFrom:
-                  secretKeyRef:
-                    name: minecraft-secret
-                    key: whitelist
-              EXISTING_WHITELIST_FILE: SYNC_FILE_MERGE_LIST
               OPS:
                 valueFrom:
                   secretKeyRef:
