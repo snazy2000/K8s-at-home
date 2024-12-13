@@ -13,6 +13,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
     - name: external-secrets-stores
+    - name: generic-device-plugin
   path: ./kubernetes/apps/downloader/prowlarr/app
   prune: true
   sourceRef:

@@ -91,6 +91,9 @@ spec:
             envFrom:
               - secretRef:
                   name: prowlarr-secret
+            resources:
+              limits:
+                squat.ai/tun: "1"
             securityContext:
               capabilities:
                 add:
