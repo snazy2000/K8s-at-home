@@ -49,6 +49,8 @@ spec:
                 value: '90'
               - name: PUBLIC_DASHBOARD
                 value: 'true'
+              - name: DB_CONNECTION
+                value: 'pgsql'
             envFrom: *envFrom
             resources:
               requests:
