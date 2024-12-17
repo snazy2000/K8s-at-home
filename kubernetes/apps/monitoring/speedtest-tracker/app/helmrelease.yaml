@@ -73,7 +73,7 @@ spec:
         controller: speedtesttracker
         ports:
           http:
-            port: *port
+            port: &port 80
     ingress:
       app:
         annotations:
