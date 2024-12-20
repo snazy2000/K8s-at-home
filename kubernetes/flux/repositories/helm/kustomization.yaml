@@ -27,3 +27,4 @@ resources:
   - ./backube.yaml
   - ./netdata.yaml
   - ./headlamp.yaml
+  - ./descheduler.yaml
