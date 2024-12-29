@@ -28,6 +28,7 @@ spec:
       namespace: system-controllers
   values:
     csi:
+      enableVolumeGroupSnapshot: false
       cephFSKernelMountOptions: ms_mode=prefer-crc
       enableLiveness: true
       serviceMonitor:
