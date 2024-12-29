@@ -13,3 +13,4 @@ resources:
   - ./readarr/ks.yaml
   - ./lidarr/ks.yaml
   - ./flaresolverr/ks.yaml
+  - ./autobrr/ks.yaml
