@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: 3.0.6
+      version: 4.0.0
       sourceRef:
         kind: HelmRepository
         name: piraeus
@@ -35,4 +35,3 @@ spec:
         certManagerIssuerRef:
           name: snapshot-controller-webhook-ca
           kind: Issuer
-
