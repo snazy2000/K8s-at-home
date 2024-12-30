@@ -31,6 +31,7 @@ spec:
       automountServiceAccountToken: false
     controllers:
       minecraft:
+        replicas: 0
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: 'true'
