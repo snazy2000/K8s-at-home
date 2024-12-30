@@ -23,8 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: minio
-      namespace: storage
+    - name: kyverno
+      namespace: kyverno
     - name: snapshot-controller
       namespace: system-controllers
   values:
