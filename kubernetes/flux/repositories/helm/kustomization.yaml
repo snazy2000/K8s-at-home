@@ -28,3 +28,4 @@ resources:
   - ./netdata.yaml
   - ./headlamp.yaml
   - ./descheduler.yaml
+  - ./kyverno.yaml
