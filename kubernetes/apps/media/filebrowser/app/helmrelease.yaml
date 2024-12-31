@@ -35,7 +35,7 @@ spec:
             env:
               TZ: Europe/London
               FB_DATABASE: /config/filebrowser.db
-              FB_ROOT: /volsync
+              FB_ROOT: /VolSync
               FB_LOG: stdout
               FB_NOAUTH: true
             probes:
