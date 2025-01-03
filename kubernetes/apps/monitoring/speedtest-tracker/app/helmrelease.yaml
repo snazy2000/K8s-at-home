@@ -44,13 +44,15 @@ spec:
               - name: DISPLAY_TIMEZONE
                 value: 'Europe/London'
               - name: SPEEDTEST_SCHEDULE
-                value: '0 */4 * * *'
+                value: '2 */1 * * *'
               - name: PRUNE_RESULTS_OLDER_THAN
                 value: '90'
               - name: PUBLIC_DASHBOARD
                 value: 'true'
               - name: DB_CONNECTION
                 value: 'pgsql'
+              - name: SPEEDTEST_SERVERS
+                value: '52523,55137'
             envFrom: *envFrom
             resources:
               requests:
