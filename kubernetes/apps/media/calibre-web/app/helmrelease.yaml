@@ -31,10 +31,24 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s/calibre-web
-              tag: 0.6.24@sha256:3adac22931efde3722834b9a12f9e3559944403db28545968949e1360939d64c
+              repository: crocodilestick/calibre-web-automated
+              tag: V2.1.2
+
             env:
               CACHE_DIR: /cache
+              TZ: "Europe/London"
+              DOCKER_MODS: >-
+                {{- $items := list
+                  "// renovate: lsio-docker-mod"
+                  "ghcr.io/linuxserver/mods:universal-calibre-v7.16.0"
+                -}}
+                {{- $filtered := list -}}
+                {{- range $item := $items -}}
+                  {{- if not (hasPrefix "//" $item) -}}
+                    {{- $filtered = append $filtered $item -}}
+                  {{- end -}}
+                {{- end -}}
+                {{- $filtered | join "|" -}}
             probes:
               liveness:
                 enabled: true
