@@ -8,6 +8,7 @@ resources:
   # Flux-Kustomizations
   - ./calibre/ks.yaml
   - ./calibre-web/ks.yaml
+  - ./calibre-web-downloader/ks.yaml
   - ./immich/ks.yaml
   - ./paperless/ks.yaml
   - ./filebrowser/ks.yaml
