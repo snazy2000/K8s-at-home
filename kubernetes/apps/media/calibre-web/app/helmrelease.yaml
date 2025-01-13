@@ -37,6 +37,8 @@ spec:
             env:
               CACHE_DIR: /cache
               TZ: "Europe/London"
+              PUID: 2000
+              PGID: 2000
               DOCKER_MODS: >-
                 {{- $items := list
                   "// renovate: lsio-docker-mod"
