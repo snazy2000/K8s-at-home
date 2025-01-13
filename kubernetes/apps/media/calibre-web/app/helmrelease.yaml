@@ -16,13 +16,6 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
-    defaultPodOptions:
-      automountServiceAccountToken: false
-      enableServiceLinks: false
-      securityContext:
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile:
-          type: RuntimeDefault
 
     controllers:
       calibre-web:
