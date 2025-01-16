@@ -34,7 +34,9 @@ spec:
               tag: 1.4.1
             env:
               LOGGING__LOGLEVEL: "Information"
-              LOGGING__FILE__ENABLED: false
+              LOGGING__FILE__ENABLED: true
+              LOGGING__FILE__PATH: /var/logs
+              LOGGING__ENHANCED: true
               TRIGGERS__QUEUECLEANER: "0 0/5 * * * ?"
               TRIGGERS__CONTENTBLOCKER: "0 0/5 * * * ?"
               QUEUECLEANER__ENABLED: true
@@ -61,3 +63,8 @@ spec:
               limits:
                 cpu: 1000m
                 memory: 1000Mi
+    persistence:
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /var/logs/
