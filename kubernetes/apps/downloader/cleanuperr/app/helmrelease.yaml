@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cleanuperr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      cleanuperr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/flmorg/cleanuperr
+              tag: 1.4.1
+            env:
+              LOGGING__LOGLEVEL: "Information"
+              LOGGING__FILE__ENABLED: false
+              TRIGGERS__QUEUECLEANER: "0 0/5 * * * ?"
+              TRIGGERS__CONTENTBLOCKER: "0 0/5 * * * ?"
+              QUEUECLEANER__ENABLED: true
+              QUEUECLEANER__RUNSEQUENTIALLY: true
+              QUEUECLEANER__IMPORT_FAILED_MAX_STRIKES: "3"
+              QUEUECLEANER__STALLED_MAX_STRIKES: "3"
+              CONTENTBLOCKER__ENABLED: true
+              CONTENTBLOCKER__BLACKLIST__ENABLED: true
+              CONTENTBLOCKER__BLACKLIST__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
+              DOWNLOAD_CLIENT: qbittorrent
+              QBITTORRENT__URL: http://qbittorrent.downloader.svc.cluster.local
+              SONARR__ENABLED: true
+              SONARR__SEARCHTYPE: Episode
+              SONARR__INSTANCES__0__URL: http://radarr.downloader.svc.cluster.local
+              RADARR__ENABLED: true
+              RADARR__INSTANCES__0__URL: http://sonarr.downloader.svc.cluster.local
+            envFrom:
+              - secretRef:
+                  name: cleanuperr-secret
+            resources:
+              requests:
+                cpu: 0m
+                memory: 0Mi
+              limits:
+                cpu: 1000m
+                memory: 1000Mi
