@@ -33,9 +33,8 @@ spec:
               repository: ghcr.io/flmorg/cleanuperr
               tag: 1.4.1
             env:
-              LOGGING__LOGLEVEL: "Information"
-              LOGGING__FILE__ENABLED: true
-              LOGGING__FILE__PATH: /var/logs
+              LOGGING__LOGLEVEL: "Verbose"
+              LOGGING__FILE__ENABLED: false
               LOGGING__ENHANCED: true
               TRIGGERS__QUEUECLEANER: "0 0/5 * * * ?"
               TRIGGERS__CONTENTBLOCKER: "0 0/5 * * * ?"
@@ -50,9 +49,13 @@ spec:
               QBITTORRENT__URL: http://qbittorrent.downloader.svc.cluster.local
               SONARR__ENABLED: true
               SONARR__SEARCHTYPE: Episode
+              SONARR__BLOCK__TYPE: blacklist
+              SONARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
               SONARR__INSTANCES__0__URL: http://radarr.downloader.svc.cluster.local
               RADARR__ENABLED: true
               RADARR__INSTANCES__0__URL: http://sonarr.downloader.svc.cluster.local
+              RADARR__BLOCK__TYPE: blacklist
+              RADARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
             envFrom:
               - secretRef:
                   name: cleanuperr-secret
