@@ -46,7 +46,7 @@ spec:
               CONTENTBLOCKER__BLACKLIST__ENABLED: true
               CONTENTBLOCKER__BLACKLIST__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
               DOWNLOAD_CLIENT: qbittorrent
-              QBITTORRENT__URL: http://qbittorrent.downloader.svc.cluster.local
+              QBITTORRENT__URL: http://qbittorrent.downloader.svc.cluster.local:8080
               SONARR__ENABLED: true
               SONARR__SEARCHTYPE: Episode
               SONARR__BLOCK__TYPE: blacklist
