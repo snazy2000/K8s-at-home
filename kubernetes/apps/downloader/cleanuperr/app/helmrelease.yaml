@@ -51,9 +51,9 @@ spec:
               SONARR__SEARCHTYPE: Episode
               SONARR__BLOCK__TYPE: blacklist
               SONARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
-              SONARR__INSTANCES__0__URL: http://radarr.downloader.svc.cluster.local
+              SONARR__INSTANCES__0__URL: http://sonarr.downloader.svc.cluster.local
               RADARR__ENABLED: true
-              RADARR__INSTANCES__0__URL: http://sonarr.downloader.svc.cluster.local
+              RADARR__INSTANCES__0__URL: http://radarr.downloader.svc.cluster.local
               RADARR__BLOCK__TYPE: blacklist
               RADARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
             envFrom:
