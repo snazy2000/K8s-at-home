@@ -53,8 +53,6 @@ spec:
         controller: spoolman
         ports:
           http:
-            port: *port
-          httpweb:
             port: 8000
     ingress:
       app:
