@@ -28,13 +28,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
-            fsGroupChangePolicy: "OnRootMismatch"
-
         containers:
           app:
             image:
@@ -48,6 +41,16 @@ spec:
                 memory: 431M
               limits:
                 memory: 431M
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       app:
         controller: spoolman
