@@ -114,6 +114,12 @@ spec:
         path: /mnt/Data/Media/Books
         globalMounts:
           - path: /books
+      audiobooks:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media/AudioBooks
+        globalMounts:
+          - path: /audiobooks
       downloads:
         type: nfs
         server: 192.168.1.100
