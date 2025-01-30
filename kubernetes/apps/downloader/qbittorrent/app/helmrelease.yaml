@@ -80,6 +80,26 @@ spec:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
 
+          seedboxapi:
+            image:
+              repository: myanonamouse/seedboxapi
+              tag: 20240908-2038
+            env:
+              interval: 1
+              DEBUG: 1
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            securityContext:
+              runAsUser: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
           port-forward:
             image:
               repository: ghcr.io/bjw-s/gluetun-qb-port-sync
@@ -133,6 +153,8 @@ spec:
         advancedMounts:
           qbittorrent:
             port-forward:
+              - path: /config
+            seedboxapi:
               - path: /config
       media:
         type: nfs
