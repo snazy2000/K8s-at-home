@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: netdata
-      version: 3.7.117
+      version: 3.7.120
       sourceRef:
         kind: HelmRepository
         name: netdata
