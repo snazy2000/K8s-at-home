@@ -131,6 +131,7 @@ spec:
     ingress:
       app:
         annotations:
+          nginx.ingress.kubernetes.io/custom-http-errors: 403,404,500,501,502,503
           external-dns.alpha.kubernetes.io/target: external.maunder.co
         className: "external"
         hosts:
