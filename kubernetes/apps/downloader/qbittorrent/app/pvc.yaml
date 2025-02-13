@@ -9,3 +9,15 @@ spec:
     requests:
       storage: 15Gi
   storageClassName: ceph-filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seedboxapi-config
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-filesystem

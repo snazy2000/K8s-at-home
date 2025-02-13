@@ -147,13 +147,18 @@ spec:
           qbittorrent:
             app:
               - path: /config
+      seedboxapiconfig:
+        enabled: true
+        existingClaim: seedboxapi-config
+        advancedMounts:
+          qbittorrent:
+            seedboxapi:
+              - path: /config
       empty-config:
         type: emptyDir
         advancedMounts:
           qbittorrent:
             port-forward:
-              - path: /config
-            seedboxapi:
               - path: /config
       media:
         type: nfs
