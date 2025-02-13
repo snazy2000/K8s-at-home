@@ -85,7 +85,6 @@ spec:
               repository: myanonamouse/seedboxapi
               tag: 20240908-2038
             env:
-              interval: 1
               DEBUG: 1
             envFrom:
               - secretRef:
