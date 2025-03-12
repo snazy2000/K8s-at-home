@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./spoolman/ks.yaml
   - ./it-tools/ks.yaml
+  - ./octoeverywhere/ks.yaml
