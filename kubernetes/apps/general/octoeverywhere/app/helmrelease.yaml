@@ -42,6 +42,6 @@ spec:
         enabled: true
         existingClaim: octoeverywhere-neppro-config
         advancedMounts:
-          neppro:
-            app:
+          octoeverywhere:
+            neppro:
               - path: /data
