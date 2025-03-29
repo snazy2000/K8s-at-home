@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -37,6 +37,14 @@ spec:
               COMPANION_MODE: klipper
               PRINTER_IP: 192.168.1.50
               TZ: Europe/London
+          centcarbon:
+            image:
+              repository: octoeverywhere/octoeverywhere
+              tag: 4.1.0
+            env:
+              COMPANION_MODE: elegoo
+              PRINTER_IP: 192.168.1.212
+              TZ: Europe/London
     persistence:
       config:
         enabled: true
@@ -44,4 +52,11 @@ spec:
         advancedMounts:
           octoeverywhere:
             neppro:
+              - path: /data
+      centconfig:
+        enabled: true
+        existingClaim: octoeverywhere-centcarbon-config
+        advancedMounts:
+          octoeverywhere:
+            centcarbon:
               - path: /data

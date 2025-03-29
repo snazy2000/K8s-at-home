@@ -9,3 +9,15 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ceph-filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: octoeverywhere-centcarbon-config
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-filesystem
