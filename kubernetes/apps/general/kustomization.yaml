@@ -9,3 +9,4 @@ resources:
   - ./spoolman/ks.yaml
   - ./it-tools/ks.yaml
   - ./octoeverywhere/ks.yaml
+  - ./actual/ks.yaml
