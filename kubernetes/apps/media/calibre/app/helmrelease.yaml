@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/calibre
-              tag: v7.14.0-ls291@sha256:9046cd7b0b1d1de819af5815bb62f1436d5b04c4425b949ca2310f4c32bdcfe4
+              tag: v7.14.0-ls291@sha256:afd005e6e065913e9e20e3ac098decf3f79495f3300215acf03f2537a6c0ac6a
             env:
               TZ: Europe/London
               PUID: 2000
