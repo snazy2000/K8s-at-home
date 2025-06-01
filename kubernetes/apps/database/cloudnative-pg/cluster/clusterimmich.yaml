@@ -4,7 +4,7 @@ metadata:
   name: immich-pg
 spec:
   instances: 2
-  imageName: ghcr.io/immich-app/postgres:16-vectorchord0.3.0-pgvectors0.2.1
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
   enableSuperuserAccess: true
   startDelay: 30
   stopDelay: 100
@@ -34,7 +34,6 @@ spec:
         - ALTER SCHEMA vectors OWNER TO "immich";
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich";
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
-        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
         # - CREATE EXTENSION IF NOT EXISTS "vector";
         # - ALTER ROLE "immich" WITH "superuser";
   backup:
