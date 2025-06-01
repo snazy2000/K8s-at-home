@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 0.17.0
+      version: 1.16.1
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -39,7 +39,7 @@ spec:
       - --ignore-ingress-tls-spec
       - --ingress-class=internal
       - --provider=pihole
-      - --pihole-api-version=6
+      #- --pihole-api-version=6
       - --registry=noop
     policy: upsert-only
     sources: ["ingress", "service"]
