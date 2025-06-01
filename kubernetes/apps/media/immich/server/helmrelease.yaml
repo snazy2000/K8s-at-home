@@ -76,3 +76,4 @@ spec:
         path: /mnt/Data/Pictures
         globalMounts:
           - path: /storage/Pictures
+
