@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/speedtest-tracker
-              tag: 1.6.0
+              tag: 1.6.1
             env:
               - name: DISPLAY_TIMEZONE
                 value: 'Europe/London'
