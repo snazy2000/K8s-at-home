@@ -93,6 +93,7 @@ spec:
             volumeMounts:
               - name: mam-cookie
                 mountPath: /mam-cookie
+
     service:
       app:
         controller: qbittorrent
