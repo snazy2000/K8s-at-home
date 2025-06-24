@@ -14,10 +14,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: seedboxapi-config
+  name: mam-cookie
 spec:
   accessModes: ["ReadWriteMany"]
   resources:
     requests:
       storage: 1Gi
   storageClassName: ceph-filesystem
+
