@@ -31,25 +31,18 @@ spec:
               repository: ghcr.io/home-operations/qbittorrent
               tag: 5.1.1@sha256:539688bd5de1d3d7e9b5b91e306635ce2ae3d9aa423cd5fea4d47eebd5c46356
             env:
+              UMASK: "022"
               QBITTORRENT__PORT: &port 8080
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/v2/app/version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
                 enabled: true
                 spec:
                   failureThreshold: 30
-                  periodSeconds: 10
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 100m
@@ -87,18 +80,7 @@ spec:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
 
-          mam-init:
-            image:
-              repository: docker.io/curlimages/curl
-              tag: 8.13.0
-            args:
-              - -w
-              - "\nResponse code: %{http_code}\n"
-              - -c
-              - /mam-cookie/mam.cookies
-              - -b
-              - /mam-cookie/mam.cookies
-              - https://t.myanonamouse.net/json/dynamicSeedbox.php
+
     service:
       app:
         controller: qbittorrent
@@ -133,12 +115,3 @@ spec:
           qbittorrent:
             app:
               - path: /downloads
-      mam-cookie:
-        existingClaim: mam-cookie
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /mam-cookie
-            mam-init:
-              - path: /mam-cookie
-
