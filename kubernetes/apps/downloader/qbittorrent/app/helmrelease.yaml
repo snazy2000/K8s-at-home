@@ -92,8 +92,6 @@ spec:
               - -b
               - /mam-cookie/mam.cookies
               - https://t.myanonamouse.net/json/dynamicSeedbox.php
-
-
     service:
       app:
         controller: qbittorrent
