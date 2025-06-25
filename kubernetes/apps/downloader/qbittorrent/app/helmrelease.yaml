@@ -80,6 +80,18 @@ spec:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
 
+          mam-init:
+            image:
+              repository: docker.io/curlimages/curl
+              tag: 8.13.0
+            args:
+              - -w
+              - "\nResponse code: %{http_code}\n"
+              - -c
+              - /mam-cookie/mam.cookies
+              - -b
+              - /mam-cookie/mam.cookies
+              - https://t.myanonamouse.net/json/dynamicSeedbox.php
 
     service:
       app:
@@ -115,3 +127,12 @@ spec:
           qbittorrent:
             app:
               - path: /downloads
+
+      mam-cookie:
+        existingClaim: mam-cookie
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /mam-cookie
+            mam-init:
+              - path: /mam-cookie
