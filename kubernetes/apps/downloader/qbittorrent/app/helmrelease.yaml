@@ -80,18 +80,10 @@ spec:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
 
-          mam-init:
+          mousehole:
             image:
-              repository: docker.io/curlimages/curl
-              tag: 8.13.0
-            args:
-              - -w
-              - "\nResponse code: %{http_code}\n"
-              - -c
-              - /mam-cookie/mam.cookies
-              - -b
-              - /mam-cookie/mam.cookies
-              - https://t.myanonamouse.net/json/dynamicSeedbox.php
+              repository: tmmrtn/mousehole
+              tag: 0.1.5
 
     service:
       app:
@@ -134,5 +126,5 @@ spec:
           qbittorrent:
             app:
               - path: /mam-cookie
-            mam-init:
-              - path: /mam-cookie
+            mousehole:
+              - path: /srv/mousehole
