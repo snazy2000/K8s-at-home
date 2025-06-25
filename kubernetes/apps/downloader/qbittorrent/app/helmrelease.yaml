@@ -91,6 +91,11 @@ spec:
         ports:
           http:
             port: *port
+      mousehole:
+        controller: qbittorrent
+        ports:
+          http:
+            port: 5010
 
     ingress:
       app:
