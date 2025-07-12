@@ -33,29 +33,7 @@ spec:
               repository: ghcr.io/cleanuparr/cleanuparr
               tag: 2.0.12
             env:
-              LOGGING__LOGLEVEL: "Verbose"
-              LOGGING__FILE__ENABLED: false
-              LOGGING__ENHANCED: true
-              TRIGGERS__QUEUECLEANER: "0 0/5 * * * ?"
-              TRIGGERS__CONTENTBLOCKER: "0 0/5 * * * ?"
-              QUEUECLEANER__ENABLED: true
-              QUEUECLEANER__RUNSEQUENTIALLY: true
-              QUEUECLEANER__IMPORT_FAILED_MAX_STRIKES: "3"
-              QUEUECLEANER__STALLED_MAX_STRIKES: "3"
-              CONTENTBLOCKER__ENABLED: true
-              CONTENTBLOCKER__BLACKLIST__ENABLED: true
-              CONTENTBLOCKER__BLACKLIST__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
-              DOWNLOAD_CLIENT: qbittorrent
-              QBITTORRENT__URL: http://qbittorrent-app.downloader.svc.cluster.local:8080
-              SONARR__ENABLED: true
-              SONARR__SEARCHTYPE: Episode
-              SONARR__BLOCK__TYPE: blacklist
-              SONARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
-              SONARR__INSTANCES__0__URL: http://sonarr.downloader.svc.cluster.local
-              RADARR__ENABLED: true
-              RADARR__INSTANCES__0__URL: http://radarr.downloader.svc.cluster.local
-              RADARR__BLOCK__TYPE: blacklist
-              RADARR__BLOCK__PATH: https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist
+              PORT: &port 11011
             envFrom:
               - secretRef:
                   name: cleanuperr-secret
@@ -66,6 +44,24 @@ spec:
               limits:
                 cpu: 1000m
                 memory: 1000Mi
+          service:
+    app:
+      controller: cleanuperr
+      ports:
+        http:
+          port: *port
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.maunder.co"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       log:
         type: emptyDir
