@@ -83,7 +83,7 @@ spec:
           mousehole:
             image:
               repository: tmmrtn/mousehole
-              tag: 0.1.10
+              tag: 0.1.11
 
     service:
       app:
