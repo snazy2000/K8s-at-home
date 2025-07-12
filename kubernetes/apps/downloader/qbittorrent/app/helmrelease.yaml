@@ -116,7 +116,7 @@ spec:
           qbittorrent:
             app:
               - path: /config
-      media:
+      downloads:
         type: nfs
         server: 192.168.1.100
         path: /mnt/Data/Downloads
@@ -124,6 +124,14 @@ spec:
           qbittorrent:
             app:
               - path: /downloads
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /media
 
       mam-cookie:
         existingClaim: mam-cookie

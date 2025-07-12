@@ -37,9 +37,9 @@ spec:
               UN_WEBSERVER_METRICS: true
               UN_WEBSERVER_LOG_FILE: /logs/webserver.log
               UN_SONARR_0_URL: http://sonarr.downloader.svc.cluster.local
-              UN_SONARR_0_PATHS_0: /downloads/tv-sonarr
+              UN_SONARR_0_PATHS_0: /media/downloads/tv-sonarr
               UN_RADARR_0_URL: http://radarr.downloader.svc.cluster.local
-              UN_RADARR_0_PATHS_0: /downloads/radarr
+              UN_RADARR_0_PATHS_0: /media/downloads/radarr
             envFrom:
               - secretRef:
                   name: unpackerr-secret
@@ -66,12 +66,12 @@ spec:
     persistence:
       logs:
         type: emptyDir
-      downloads:
+      media:
         type: nfs
         server: 192.168.1.100
-        path: /mnt/Data/Downloads
+        path: /mnt/Data/Media
         globalMounts:
-          - path: /downloads
+          - path: /media
     service:
       app:
         controller: *app

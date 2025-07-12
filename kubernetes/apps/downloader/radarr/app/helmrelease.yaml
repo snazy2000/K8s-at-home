@@ -106,12 +106,20 @@ spec:
         existingClaim: radarr
       tmp:
         type: emptyDir
-      media:
+      movies:
         type: nfs
         server: 192.168.1.100
         path: /mnt/Data/Media/Movies
         globalMounts:
           - path: /movies
+
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media
+        globalMounts:
+          - path: /media
+
       downloads:
         type: nfs
         server: 192.168.1.100

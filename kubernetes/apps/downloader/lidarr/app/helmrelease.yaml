@@ -108,12 +108,18 @@ spec:
         existingClaim: lidarr
       tmp:
         type: emptyDir
-      media:
+      music:
         type: nfs
         server: 192.168.1.100
         path: /mnt/Data/Media/Music
         globalMounts:
           - path: /music
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media
+        globalMounts:
+          - path: /media
       downloads:
         type: nfs
         server: 192.168.1.100

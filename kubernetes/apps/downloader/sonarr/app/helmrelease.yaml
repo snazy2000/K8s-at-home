@@ -103,12 +103,23 @@ spec:
         existingClaim: sonarr
       tmp:
         type: emptyDir
-      media:
+
+      tvshows:
         type: nfs
         server: 192.168.1.100
         path: /mnt/Data/Media/TV Shows
         globalMounts:
           - path: /tvshows
+
+      media:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /media
+
       downloads:
         type: nfs
         server: 192.168.1.100
