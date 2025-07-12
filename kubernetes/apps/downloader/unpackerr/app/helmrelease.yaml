@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app unpackerr
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      unpackerr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/unpackerr/unpackerr
+              tag: 0.14.5@sha256:dc72256942ce50d1c8a1aeb5aa85b6ae2680a36eefd2182129d8d210fce78044
+            env:
+              TZ: "Europe/London"
+              UN_INTERVAL: 1m
+              UN_WEBSERVER_METRICS: true
+              UN_WEBSERVER_LOG_FILE: /logs/webserver.log
+              UN_SONARR_0_URL: http://sonarr.downloader.svc.cluster.local
+              UN_SONARR_0_PATHS_0: /downloads/tv-sonarr
+              UN_RADARR_0_URL: http://radarr.downloader.svc.cluster.local
+              UN_RADARR_0_PATHS_0: /downloads/radarr
+            envFrom:
+              - secretRef:
+                  name: unpackerr-secret
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 3Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 10000
+    persistence:
+      logs:
+        type: emptyDir
+      downloads:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Downloads
+        globalMounts:
+          - path: /downloads
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 5656
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s

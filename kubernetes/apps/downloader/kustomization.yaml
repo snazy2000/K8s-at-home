@@ -15,3 +15,4 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./autobrr/ks.yaml
   - ./cleanuperr/ks.yaml
+  - ./unpackerr/ks.yaml
