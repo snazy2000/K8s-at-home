@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cleanuparr/cleanuparr
-              tag: 2.0.12
+              tag: 2.0.14
             env:
               LOGGING__LOGLEVEL: "Verbose"
               LOGGING__FILE__ENABLED: false
