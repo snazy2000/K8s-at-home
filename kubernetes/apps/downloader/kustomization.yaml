@@ -16,3 +16,4 @@ resources:
   - ./autobrr/ks.yaml
   - ./cleanuperr/ks.yaml
   - ./unpackerr/ks.yaml
+  - ./cross-seed/ks.yaml
