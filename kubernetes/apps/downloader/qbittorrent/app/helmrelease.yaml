@@ -116,14 +116,7 @@ spec:
           qbittorrent:
             app:
               - path: /config
-      downloads:
-        type: nfs
-        server: 192.168.1.100
-        path: /mnt/Data/Downloads
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /downloads
+
       media:
         type: nfs
         server: 192.168.1.100
