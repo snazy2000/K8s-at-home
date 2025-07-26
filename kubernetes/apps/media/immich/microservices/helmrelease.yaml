@@ -31,16 +31,6 @@ spec:
               requests:
                 cpu: 100m
                 memory: 250Mi
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
             envFrom:
               - secretRef:
                   name: immich-secret
