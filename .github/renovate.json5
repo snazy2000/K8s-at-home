@@ -22,33 +22,33 @@
     '**/*.sops.*',
   ],
   flux: {
-    fileMatch: [
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   'helm-values': {
-    fileMatch: [
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   helmfile: {
-    fileMatch: [
-      '(^|/)helmfile\\.ya?ml(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)helmfile\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   kubernetes: {
-    fileMatch: [
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   kustomize: {
-    fileMatch: [
-      '(^|/)kustomization\\.ya?ml(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)kustomization\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   pip_requirements: {
-    fileMatch: [
-      '(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)(?:\\.j2)?$',
+    managerFilePatterns: [
+      '/(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)(?:\\.j2)?$/',
     ],
   },
   commitMessageTopic: '{{depName}}',
@@ -96,7 +96,7 @@
       matchPackageNames: [
         '/ghcr.io/bjw-s/',
         '/ghcr.io/onedr0p/',
-        '/ghcr.io/home-operations/'
+        '/ghcr.io/home-operations/',
       ],
     },
     {
@@ -355,8 +355,8 @@
       description: [
         'Process custom dependencies',
       ],
-      fileMatch: [
-        '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+      managerFilePatterns: [
+        '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
       ],
       matchStrings: [
         'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+: (&\\S+\\s)?(?<currentValue>\\S+)',
@@ -368,8 +368,8 @@
       description: [
         'Process CloudnativePG Postgresql version',
       ],
-      fileMatch: [
-        '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+      managerFilePatterns: [
+        '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
       ],
       matchStrings: [
         'imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)',
