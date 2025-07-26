@@ -66,6 +66,8 @@ spec:
           "http_user_agent": "$http_user_agent"}
         proxy-body-size: 0
         proxy-buffer-size: 16k
+        proxy-buffers: 4 32k
+        proxy-busy-buffers-size: 64k
         ssl-protocols: TLSv1.3 TLSv1.2
         plugins: "crowdsec"
         lua-shared-dicts: "crowdsec_cache: 50m"
