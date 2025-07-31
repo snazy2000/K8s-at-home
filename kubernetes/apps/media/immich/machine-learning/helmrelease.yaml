@@ -26,21 +26,11 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.135.3
+              tag: v1.136.0
             resources:
               requests:
                 cpu: 100m
                 memory: 250Mi
-            probes:
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
             env:
               MACHINE_LEARNING_HOST: 0.0.0.0
               MACHINE_LEARNING_PORT: &port 3003
