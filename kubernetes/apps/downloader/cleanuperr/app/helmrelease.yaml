@@ -67,3 +67,5 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /var/logs/
+      config:
+        existingClaim: cleanuperr
