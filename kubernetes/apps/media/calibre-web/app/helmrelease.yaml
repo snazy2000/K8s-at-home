@@ -21,7 +21,12 @@ spec:
       calibre-web:
         annotations:
           reloader.stakater.com/auto: "true"
-
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            seccompProfile: { type: RuntimeDefault }
         containers:
           app:
             image:
@@ -33,41 +38,44 @@ spec:
               TZ: "Europe/London"
               PUID: 2000
               PGID: 2000
-              DOCKER_MODS: >-
-                {{- $items := list
-                  "// renovate: lsio-docker-mod"
-                  "ghcr.io/linuxserver/mods:universal-calibre-v7.16.0"
-                -}}
-                {{- $filtered := list -}}
-                {{- range $item := $items -}}
-                  {{- if not (hasPrefix "//" $item) -}}
-                    {{- $filtered = append $filtered $item -}}
-                  {{- end -}}
-                {{- end -}}
-                {{- $filtered | join "|" -}}
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
+                custom: true
                 spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+                  httpGet:
+                    path: /login
+                    port: &port 8083
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: true
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+                add:
+                  # S6
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                  - FOWNER
+                  - DAC_OVERRIDE
             resources:
               requests:
-                cpu: 5m
-                memory: 470M
+                cpu: 100m
               limits:
-                memory: 470M
+                memory: 1Gi
 
     service:
       app:
         controller: calibre-web
         ports:
           http:
-            port: 8083
+            port: *port
 
     ingress:
       app:
