@@ -98,6 +98,13 @@ spec:
             app:
               - path: /config
 
+      newlibary:
+        existingClaim: calibre-web-lib
+        advancedMounts:
+          calibre-web:
+            app:
+              - path: /calibre-library
+
       media:
         type: nfs
         server: 192.168.1.100
@@ -117,7 +124,7 @@ spec:
         server: 192.168.1.100
         path: /mnt/Data/Media/Books/Calibre Library
         globalMounts:
-          - path: /calibre-library
+          - path: /oldcalibre-library
 
       cache:
         type: emptyDir
