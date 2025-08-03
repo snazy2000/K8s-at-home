@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: crocodilestick/calibre-web-automated
-              tag: V2.1.2
+              tag: V3.1.2
 
             env:
               CACHE_DIR: /cache
