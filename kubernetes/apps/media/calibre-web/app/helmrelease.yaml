@@ -119,13 +119,6 @@ spec:
         globalMounts:
           - path: /cwa-book-ingest
 
-      lib:
-        type: nfs
-        server: 192.168.1.100
-        path: /mnt/Data/Media/Books/Calibre Library
-        globalMounts:
-          - path: /oldcalibre-library
-
       cache:
         type: emptyDir
         globalMounts:

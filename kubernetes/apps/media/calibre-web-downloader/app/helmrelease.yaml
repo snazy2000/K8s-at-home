@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/calibrain/calibre-web-automated-book-downloader
-              tag: latest@sha256:518908641a2260249513f349eef9f30e580f8f428d1adfa830096b43a818e97b
+              tag: 20250730@sha256:7d01e56bfb0f0f150f89da59e4ec5627c4dc53d48d5ff5283e7e10877c737f8c
               pullPolicy: IfNotPresent
             env:
               - name: FLASK_PORT
@@ -54,15 +54,6 @@ spec:
               requests:
                 cpu: 10m
                 memory: 256Mi
-          bypass:
-            image:
-              repository: ghcr.io/sarperavci/cloudflarebypassforscraping
-              tag: latest@sha256:bd326a3c6ae0b7ed3e405bbaa230e43e252f444c98f57d179f7a1d78f273748b
-              pullPolicy: IfNotPresent
-            resources:
-              requests:
-                cpu: 10m
-                memory: 128Mi
 
     service:
       app:
@@ -102,3 +93,9 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
+      injest:
+        type: nfs
+        server: 192.168.1.100
+        path: /mnt/Data/Media/Books/Import/cwa-book-ingest
+        globalMounts:
+          - path: /cwa-book-ingest
