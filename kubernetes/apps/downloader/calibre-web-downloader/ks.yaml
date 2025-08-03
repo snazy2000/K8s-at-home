@@ -6,11 +6,11 @@ metadata:
   name: &app calibre-web-downloader
   namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: downloader
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/media/calibre-web-downloader/app
+  path: ./kubernetes/apps/downloader/calibre-web-downloader/app
   prune: true
   sourceRef:
     kind: GitRepository

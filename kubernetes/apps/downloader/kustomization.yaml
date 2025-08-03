@@ -18,3 +18,4 @@ resources:
   - ./unpackerr/ks.yaml
   - ./cross-seed/ks.yaml
   - ./huntarr/ks.yaml
+  - ./calibre-web-downloader/ks.yaml

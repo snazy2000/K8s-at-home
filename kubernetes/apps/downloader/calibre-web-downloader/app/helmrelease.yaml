@@ -43,9 +43,7 @@ spec:
               - name: GID
                 value: 2000
               - name: USE_CF_BYPASS
-                value: true
-              - name: CLOUDFLARE_PROXY_URL
-                value: http://localhost:8000
+                value: false
               - name: INGEST_DIR
                 value: /books/Import/cwa-book-ingest
               - name: BOOK_LANGUAGE
@@ -54,6 +52,26 @@ spec:
               requests:
                 cpu: 10m
                 memory: 256Mi
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.40.0
+            env:
+              VPN_SERVICE_PROVIDER: ipvanish
+              VPN_TYPE: openvpn
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.0.0.0/8 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            resources:
+              limits:
+                squat.ai/tun: "1"
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
 
     service:
       app:
