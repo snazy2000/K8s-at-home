@@ -29,4 +29,4 @@ resources:
   - ./headlamp.yaml
   - ./descheduler.yaml
   - ./kyverno.yaml
-  - ./csi-driver-nfs-charts.yaml
+  - ./csi-driver-nfs.yaml
