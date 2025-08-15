@@ -11,3 +11,4 @@ resources:
   - ./spegel/ks.yaml
   - ./generic-device-plugin/ks.yaml
   - ./descheduler/ks.yaml
+  - ./csi-driver-nfs/ks.yaml
