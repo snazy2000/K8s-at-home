@@ -106,6 +106,7 @@ spec:
       acquisition:
         # -- Specify each pod you want to process it logs (namespace, podName and program)
         - namespace: network
+          poll_without_inotify: true
           podName: ingress-nginx-external-controller-*
           program: nginx
         - namespace: security
