@@ -32,6 +32,9 @@ spec:
               requests:
                 cpu: 100m
                 memory: 250Mi
+            env:
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+              UPLOAD_LOCATION: *mediaLocation
             envFrom:
               - secretRef:
                   name: immich-secret

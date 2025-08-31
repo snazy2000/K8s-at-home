@@ -36,6 +36,8 @@ spec:
               MACHINE_LEARNING_PORT: &port 3003
               MACHINE_LEARNING_CACHE_FOLDER: /cache
               TRANSFORMERS_CACHE: /cache
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+              UPLOAD_LOCATION: *mediaLocation
             envFrom:
               - secretRef:
                   name: immich-secret
