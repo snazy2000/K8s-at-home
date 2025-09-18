@@ -39,7 +39,7 @@ spec:
               UPLOAD_LOCATION: /usr/src/app/upload
             envFrom:
               - secretRef:
-                  name: immich-secret
+                  name: immich-new-secret
     service:
       app:
         controller: main
