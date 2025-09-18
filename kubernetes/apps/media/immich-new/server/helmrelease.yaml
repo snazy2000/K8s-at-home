@@ -49,7 +49,7 @@ spec:
                   name: immich-new-secret
     service:
       app:
-        controller: main
+        controller: immich
         ports:
           http:
             port: 2283
