@@ -12,8 +12,6 @@ spec:
     size: 20Gi
     storageClass: openebs-hostpath
   enableSuperuserAccess: true
-  superuserSecret:
-    name: immichdb-secret
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
