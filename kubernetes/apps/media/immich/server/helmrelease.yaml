@@ -63,13 +63,6 @@ spec:
         path: /mnt/Data/Media/Photos
         globalMounts:
           - path: /usr/src/app/upload
-        mountOptions:
-        - nfsvers=4.2
-        - nconnect=8
-        - hard
-        - noatime
-        - nodiratime
-        - nolock
       media:
         type: nfs
         server: 192.168.1.100
