@@ -21,7 +21,8 @@ spec:
     remediation:
       retries: 5
   values:
-    initContainers:
+    controllers:
+      initContainers:
       init-db:
         image:
           repository: ghcr.io/home-operations/postgres-init
@@ -30,7 +31,6 @@ spec:
         envFrom:
           - secretRef:
               name: immich-new-secret
-    controllers:
       main:
         containers:
           main:
