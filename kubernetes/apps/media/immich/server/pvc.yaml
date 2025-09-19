@@ -20,7 +20,7 @@ spec:
     # make sure this value is unique for every share in the cluster
     volumeHandle: smb-server.default.svc.cluster.local/immich
     volumeAttributes:
-      source: //192.168.1.100/Media/ImmichPhotos
+      source: //192.168.1.100/Media/Photos
     nodeStageSecretRef:
       name: smbcreds
       namespace: default
