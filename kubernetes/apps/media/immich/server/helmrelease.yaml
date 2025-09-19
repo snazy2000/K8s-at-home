@@ -58,9 +58,7 @@ spec:
                   port: http
     persistence:
       photos:
-        type: nfs
-        server: 192.168.1.100
-        path: /mnt/Data/Media/Photos
+        existingClaim: immich-smb
         globalMounts:
           - path: /usr/src/app/upload
       media:
