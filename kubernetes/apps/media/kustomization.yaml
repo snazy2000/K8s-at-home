@@ -11,4 +11,3 @@ resources:
   - ./paperless/ks.yaml
   - ./filebrowser/ks.yaml
   - ./audiobookshelf/ks.yaml
-  - ./immich-new/ks.yaml
