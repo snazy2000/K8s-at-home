@@ -36,7 +36,9 @@ spec:
               - secretRef:
                   name: snipman-secret
           artisan:
-            image: ghcr.io/snazy2000/snipman-web
+            image:
+              repository: ghcr.io/snazy2000/snipman-web
+              tag: 0.0.1
             args:
               - /bin/bash
               - -c
