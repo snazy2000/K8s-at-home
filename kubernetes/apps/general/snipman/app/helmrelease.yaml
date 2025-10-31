@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: snipman
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      snipman:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: snipman-secret
+          artisan:
+            image: ghcr.io/snazy2000/snipman-web
+            args:
+              - /bin/bash
+              - -c
+              - php artisan migrate --force
+            env:
+              TZ: Europe/London
+              APP_KEY:
+              DB_CONNECTION: pgsql
+            envFrom: *envFrom
+        containers:
+          app:
+            image:
+              repository: ghcr.io/snazy2000/snipman-web
+              tag: 0.0.1
+            env:
+              TZ: Europe/London
+              APP_KEY:
+              APP_URL: snipman.maunder.co
+              DB_CONNECTION: pgsql
+              AI_PROVIDER: ollama
+              OLLAMA_URL: http://192.168.1.83:11434
+              OLLAMA_MODEL: qwen3:0.6b
+              OLLAMA_TIMEOUT: 60
+              OLLAMA_MAX_TOKENS: 512
+              AI_AUTO_DESCRIPTION: true
+            envFrom: *envFrom
+          queue:
+            image:
+              repository: ghcr.io/snazy2000/snipman-queue
+              tag: 0.0.1
+            env:
+              TZ: Europe/London
+
+    service:
+      app:
+        controller: snipman
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.maunder.co"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
