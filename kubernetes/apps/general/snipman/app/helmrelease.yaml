@@ -35,7 +35,7 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: snipman-secret
-          artisan:
+          init-migrate:
             image:
               repository: ghcr.io/snazy2000/snipman-web
               tag: b219bd1
