@@ -38,7 +38,7 @@ spec:
           artisan:
             image:
               repository: ghcr.io/snazy2000/snipman-web
-              tag: 0.0.1
+              tag: b219bd1
             args:
               - /bin/sh
               - -c
@@ -52,7 +52,7 @@ spec:
           app:
             image:
               repository: ghcr.io/snazy2000/snipman-web
-              tag: 0.0.1
+              tag: b219bd1
             env:
               TZ: Europe/London
               APP_KEY:
