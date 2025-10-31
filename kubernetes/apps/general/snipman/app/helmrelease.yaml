@@ -40,8 +40,6 @@ spec:
               repository: ghcr.io/snazy2000/snipman-web
               tag: 0.0.1
             args:
-              - /bin/bash
-              - -c
               - php artisan migrate --force
             env:
               TZ: Europe/London
