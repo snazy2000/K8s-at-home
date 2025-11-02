@@ -45,7 +45,6 @@ spec:
               - php artisan migrate --force
             env:
               TZ: Europe/London
-              APP_KEY:
               DB_CONNECTION: pgsql
             envFrom: *envFrom
         containers:
@@ -55,7 +54,6 @@ spec:
               tag: b219bd1
             env:
               TZ: Europe/London
-              APP_KEY:
               APP_URL: snipman.maunder.co
               DB_CONNECTION: pgsql
               AI_PROVIDER: ollama
