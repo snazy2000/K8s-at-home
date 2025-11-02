@@ -69,7 +69,8 @@ spec:
               tag: 0.0.1
             env:
               TZ: Europe/London
-
+              DB_CONNECTION: pgsql
+            envFrom: *envFrom
     service:
       app:
         controller: snipman
