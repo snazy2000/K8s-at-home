@@ -4,9 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: nzbget-config
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes: ["ReadWriteMany"]
   resources:
     requests:
       storage: 15Gi
-  storageClassName: ceph-block
+  storageClassName: ceph-filesystem
 

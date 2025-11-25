@@ -44,9 +44,9 @@ spec:
                   failureThreshold: 3
               readiness: *probes
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
+              runAsUser: 2000
+              runAsGroup: 2000
+              fsGroup: 2000
               runAsNonRoot: true
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -64,7 +64,7 @@ spec:
             env:
               VPN_SERVICE_PROVIDER: ipvanish
               VPN_TYPE: openvpn
-              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_INPUT_PORTS: 80
               FIREWALL_OUTBOUND_SUBNETS: 10.0.0.0/8 # Allow access to k8s subnets
             envFrom:
               - secretRef:
