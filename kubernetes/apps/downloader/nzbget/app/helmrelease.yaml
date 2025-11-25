@@ -26,31 +26,12 @@ spec:
           app:
             nameOverride: nzbget
             image:
-              repository: ghcr.io/home-operations/nzbget
-              tag: 25.4.0@sha256:7afaa93e1992f86a033a310eb0f012f1e4c6bd406caa608146df951e85298ff1
+              repository: ghcr.io/linuxserver/nzbget
+              tag: version-v25.4
             env:
-              NZBGET__PORT: &port 80
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /jsonrpc/status
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 2
-                  failureThreshold: 3
-              readiness: *probes
-            securityContext:
-              runAsUser: 2000
-              runAsGroup: 2000
-              fsGroup: 2000
-              runAsNonRoot: true
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              PUID: 2000
+              PGID: 2000
+              TZ: Europe/London
             resources:
               requests:
                 cpu: 100m
@@ -83,7 +64,7 @@ spec:
         controller: nzbget
         ports:
           http:
-            port: *port
+            port: 6789
 
     ingress:
       app:
