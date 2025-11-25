@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.10.5
+talosVersion: v1.11.5
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.33.2
 
@@ -145,8 +145,8 @@ patches:
         fs.inotify.max_queued_events: "65536"
         fs.inotify.max_user_watches: "524288"
         fs.inotify.max_user_instances: "8192"
-        net.core.rmem_max: "2500000"
-        net.core.wmem_max: "2500000"
+        net.core.rmem_max: "67108864"
+        net.core.wmem_max: "67108864"
 
   # Mount openebs-hostpath in kubelet
   - |-
