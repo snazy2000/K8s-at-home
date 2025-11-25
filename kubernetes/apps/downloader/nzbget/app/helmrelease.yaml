@@ -43,9 +43,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            volumeMounts:
-              - name: nzbget-config
-                mountPath: /config
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
