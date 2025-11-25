@@ -19,3 +19,4 @@ resources:
   - ./cross-seed/ks.yaml
   - ./huntarr/ks.yaml
   - ./calibre-web-downloader/ks.yaml
+  - ./nzbget/ks.yaml
