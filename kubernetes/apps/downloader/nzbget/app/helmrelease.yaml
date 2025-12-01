@@ -48,7 +48,7 @@ spec:
             env:
               VPN_SERVICE_PROVIDER: ipvanish
               VPN_TYPE: openvpn
-              FIREWALL_INPUT_PORTS: 80
+              FIREWALL_INPUT_PORTS: 6789
               FIREWALL_OUTBOUND_SUBNETS: 10.0.0.0/8 # Allow access to k8s subnets
             envFrom:
               - secretRef:
@@ -67,7 +67,7 @@ spec:
         controller: nzbget
         ports:
           http:
-            port: *port
+            port: 6789
 
     ingress:
       app:
