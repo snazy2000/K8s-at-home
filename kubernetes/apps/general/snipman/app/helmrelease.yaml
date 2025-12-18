@@ -38,7 +38,7 @@ spec:
           init-migrate:
             image:
               repository: ghcr.io/snazy2000/snipman-web
-              tag: sha-0300e38
+              tag: sha-3d8655e
             args:
               - /bin/sh
               - -c
