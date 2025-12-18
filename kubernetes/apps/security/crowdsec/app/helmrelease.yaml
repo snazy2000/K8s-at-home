@@ -36,7 +36,7 @@ spec:
     image:
       # -- docker image repository name
       repository: ghcr.io/crowdsecurity/crowdsec
-      tag: v1.6.11@sha256:cde4eee758fa483c0d897779ffc9d0d55ffc649ae98913a380adb1d02d902710
+      tag: v1.7.4@sha256:4312a5109057f2a6b1237431abe638cd1026ecb3a9c2707c6ccc1ed09e4cb994
       # -- pullPolicy
       pullPolicy: IfNotPresent
       # -- docker image tag
