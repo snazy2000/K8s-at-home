@@ -38,7 +38,7 @@ spec:
           init-migrate:
             image:
               repository: ghcr.io/snazy2000/snipman-web
-              tag: sha-3d8655e
+              tag: sha-674c775
             args:
               - /bin/sh
               - -c
@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: ghcr.io/snazy2000/snipman-web
-              tag: sha-3d8655e
+              tag: sha-674c775
             env:
               TZ: Europe/London
               APP_URL: snipman.maunder.co
@@ -60,7 +60,7 @@ spec:
           queue:
             image:
               repository: ghcr.io/snazy2000/snipman-queue
-              tag: sha-3d8655e
+              tag: sha-674c775
             env:
               TZ: Europe/London
               DB_CONNECTION: pgsql
