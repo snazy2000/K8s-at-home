@@ -20,3 +20,4 @@ resources:
   - ./huntarr/ks.yaml
   - ./calibre-web-downloader/ks.yaml
   - ./nzbget/ks.yaml
+  - ./seer/ks.yaml
