@@ -56,6 +56,8 @@ spec:
               TZ: Europe/London
               APP_URL: snipman.maunder.co
               DB_CONNECTION: pgsql
+              MAIL_HOST: smtp-relay.network.svc.cluster.local
+              MAIL_FROM_ADDRESS: Snippet Manager <snipman@maunder.co>
             envFrom: *envFrom
           queue:
             image:
