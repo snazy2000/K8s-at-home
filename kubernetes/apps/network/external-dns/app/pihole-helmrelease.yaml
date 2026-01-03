@@ -39,8 +39,10 @@ spec:
       - --ignore-ingress-tls-spec
       - --ingress-class=internal
       - --pihole-api-version=6
+      - --pihole-tls-skip-verify
     policy: upsert-only
     sources: ["ingress", "service"]
     domainFilters: ["${SECRET_DOMAIN}"]
+    registry: noop
     serviceMonitor:
       enabled: true
