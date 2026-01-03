@@ -131,7 +131,8 @@ spec:
       minecraft:
         controller: minecraft
         type: LoadBalancer    # https://kubernetes.io/blog/2022/05/23/service-ip-dynamic-and-static-allocation/
-        clusterIP: 192.168.1.196
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.1.195"
         ports:
           java:
             port: 25565
