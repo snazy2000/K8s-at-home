@@ -38,7 +38,6 @@ spec:
       - --pihole-server=http://192.168.1.250
       - --ignore-ingress-tls-spec
       - --ingress-class=internal
-      - --provider=pihole
       - --pihole-api-version=6
       - --registry=noop
     policy: upsert-only
