@@ -89,6 +89,7 @@ spec:
 
     service:
       app:
+        controller: manyfold
         ports:
           http:
             port: *port
