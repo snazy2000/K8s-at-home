@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: jlesage/crashplan-pro
-              tag: v25.12.4
+              tag: v26.01.1
             env:
               TZ: Europe/London
               KEEP_APP_RUNNING: 1
