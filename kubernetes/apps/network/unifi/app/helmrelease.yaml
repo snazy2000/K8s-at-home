@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: jacobalberty/unifi
-              tag: v9.4.19
+              tag: v10.0.162
 
             env:
               RUNAS_UID0: "false"
