@@ -27,6 +27,18 @@ spec:
     deployment:
       replicas: 2
 
+    env:
+      - name: CROWDSEC_BOUNCER_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: traefik-crowdsec-secret
+            key: BOUNCER_KEY_TRAEFIK
+      - name: CROWDSEC_LAPI_KEY
+        valueFrom:
+          secretKeyRef:
+            name: traefik-crowdsec-secret
+            key: BOUNCER_KEY_TRAEFIK
+
     global:
       checkNewVersion: false
       sendAnonymousUsage: false
@@ -34,12 +46,6 @@ spec:
     additionalArguments:
       - --serversTransport.insecureSkipVerify=true
       - --providers.kubernetescrd.allowCrossNamespace=true
-      - --experimental.plugins.bouncer.settings.enabled=true
-      - --experimental.plugins.bouncer.settings.crowdsecMode=stream
-      - --experimental.plugins.bouncer.settings.crowdsecLapiScheme=http
-      - --experimental.plugins.bouncer.settings.crowdsecLapiHost=crowdsec-service.security.svc.cluster.local:8080
-      - --experimental.plugins.bouncer.settings.crowdsecLapiKey=${BOUNCER_KEY_TRAEFIK}
-      - --experimental.plugins.bouncer.settings.updateIntervalSeconds=10
 
     ports:
       websecure:
@@ -50,6 +56,7 @@ spec:
         protocol: TCP
         http:
           middlewares:
+            - network-crowdsec-bouncer@kubernetescrd
             - network-error-pages@kubernetescrd
           tls:
             enabled: true
@@ -88,7 +95,7 @@ spec:
       plugins:
         bouncer:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-          version: v1.3.5
+          version: v1.5.0
 
     providers:
       kubernetesCRD:
