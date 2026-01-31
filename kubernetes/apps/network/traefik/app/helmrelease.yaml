@@ -1,0 +1,157 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: traefik
+      version: 33.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: cloudflared
+      namespace: network
+  values:
+    deployment:
+      replicas: 2
+
+    globalArguments:
+      - --global.checknewversion=false
+      - --global.sendanonymoususage=false
+
+    additionalArguments:
+      - --serversTransport.insecureSkipVerify=true
+      - --providers.kubernetesingress.ingressclass=internal
+      - --providers.kubernetescrd.allowCrossNamespace=true
+
+    ports:
+      web:
+        port: 8080
+        expose:
+          default: false
+      websecure-internal:
+        port: 8443
+        expose:
+          default: true
+        exposedPort: 443
+        protocol: TCP
+        tls:
+          enabled: true
+          options: "default"
+      websecure-external:
+        port: 8444
+        expose:
+          default: true
+        exposedPort: 443
+        protocol: TCP
+        tls:
+          enabled: true
+          options: "default"
+      metrics:
+        port: 9100
+        expose:
+          default: false
+        protocol: TCP
+
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations:
+        io.cilium/lb-ipam-ips: "192.168.1.191"
+        external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+      spec:
+        externalTrafficPolicy: Cluster
+
+    # Create separate service for external
+    additionalServices:
+      external:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.1.193"
+          external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+        spec:
+          externalTrafficPolicy: Cluster
+          ports:
+            - name: websecure-external
+              port: 443
+              targetPort: websecure-external
+              protocol: TCP
+
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      name: internal
+
+    ingressRoute:
+      dashboard:
+        enabled: false
+
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        allowExternalNameServices: true
+        publishedService:
+          enabled: false
+
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: "${SECRET_DOMAIN}-production-tls"
+
+    logs:
+      general:
+        level: INFO
+      access:
+        enabled: true
+        format: json
+        fields:
+          general:
+            defaultmode: keep
+          headers:
+            defaultmode: drop
+
+    metrics:
+      prometheus:
+        enabled: true
+        service:
+          enabled: true
+        serviceMonitor:
+          enabled: true
+          namespaceSelector:
+            any: true
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
+
+    securityContext:
+      capabilities:
+        drop: [ALL]
+      readOnlyRootFilesystem: true
+      runAsGroup: 65532
+      runAsNonRoot: true
+      runAsUser: 65532
+
+    podSecurityContext:
+      fsGroup: 65532
+      fsGroupChangePolicy: OnRootMismatch

@@ -18,6 +18,7 @@ resources:
   - ./stakater.yaml
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
+  - ./traefik.yaml
   - ./k8s-gateway.yaml
   - ./grafana.yaml
   - ./kasten.yaml

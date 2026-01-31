@@ -1,0 +1,61 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: crowdsec-bouncer
+  namespace: network
+spec:
+  plugin:
+    bouncer:
+      enabled: true
+      crowdsecMode: stream
+      crowdsecLapiScheme: http
+      crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
+      crowdsecLapiKey: "${BOUNCER_KEY_TRAEFIK}"
+      updateIntervalSeconds: 10
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: error-pages
+  namespace: network
+spec:
+  errors:
+    status:
+      - "401-404"
+      - "500-503"
+    service:
+      name: error-pages
+      port: 8080
+    query: /{status}.html
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: security-headers
+  namespace: network
+spec:
+  headers:
+    sslRedirect: true
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 31449600
+    customFrameOptionsValue: SAMEORIGIN
+    customResponseHeaders:
+      X-Robots-Tag: "noindex, nofollow"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: buffering
+  namespace: network
+spec:
+  buffering:
+    maxRequestBodyBytes: 0
+    memRequestBodyBytes: 2097152
+    maxResponseBodyBytes: 0
+    memResponseBodyBytes: 2097152
+    retryExpression: IsNetworkError() && Attempts() <= 2

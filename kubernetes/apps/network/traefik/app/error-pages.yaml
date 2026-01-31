@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: error-pages
+  namespace: network
+spec:
+  selector:
+    app.kubernetes.io/name: error-pages
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: error-pages
+  namespace: network
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: error-pages
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: error-pages
+    spec:
+      containers:
+        - name: error-pages
+          image: ghcr.io/tarampampam/error-pages:3.8.0@sha256:6fda7ff61de68b3b188538221f718d834fd9aa6ddaf0c13044febc6100515fd1
+          env:
+            - name: TEMPLATE_NAME
+              value: connection
+            - name: SHOW_DETAILS
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65534
