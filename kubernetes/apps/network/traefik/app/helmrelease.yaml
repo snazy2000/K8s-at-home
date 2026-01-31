@@ -37,10 +37,6 @@ spec:
       - --providers.kubernetescrd.allowCrossNamespace=true
 
     ports:
-      web:
-        port: 8080
-        expose:
-          default: false
       websecure:
         port: 8443
         expose:
