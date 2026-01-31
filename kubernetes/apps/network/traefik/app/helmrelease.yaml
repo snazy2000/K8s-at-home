@@ -85,6 +85,9 @@ spec:
       spec:
         externalTrafficPolicy: Cluster
 
+    api:
+      dashboard: true
+
     ingressRoute:
       dashboard:
         enabled: true
@@ -92,7 +95,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.maunder.co
         entryPoints:
           - websecure
-        matchRule: Host(`traefik.maunder.co`)
+        matchRule: (Host(`traefik.maunder.co`) && PathPrefix(`/api`)) || (Host(`traefik.maunder.co`) && PathPrefix(`/dashboard`))
         tls:
           secretName: "${SECRET_DOMAIN}-production-tls"
 
