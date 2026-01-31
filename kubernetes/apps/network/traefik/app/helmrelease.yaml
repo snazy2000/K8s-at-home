@@ -46,6 +46,7 @@ spec:
           enabled: true
           options: "default"
         middlewares:
+          - network-crowdsec-bouncer@kubernetescrd
           - network-error-pages@kubernetescrd
       metrics:
         port: 9100
