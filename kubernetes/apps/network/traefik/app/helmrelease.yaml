@@ -62,19 +62,6 @@ spec:
         io.cilium/lb-ipam-ips: "192.168.1.191"
       spec:
         externalTrafficPolicy: Cluster
-      additionalServices:
-        external:
-          type: LoadBalancer
-          annotations:
-            io.cilium/lb-ipam-ips: "192.168.1.193"
-            external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-          spec:
-            externalTrafficPolicy: Cluster
-          ports:
-            - name: websecure
-              port: 443
-              targetPort: websecure
-              protocol: TCP
 
     ingressRoute:
       dashboard:
