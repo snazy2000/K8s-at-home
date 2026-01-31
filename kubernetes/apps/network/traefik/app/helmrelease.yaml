@@ -33,7 +33,6 @@ spec:
 
     additionalArguments:
       - --serversTransport.insecureSkipVerify=true
-      - --providers.kubernetesingress.ingressclass=internal
       - --providers.kubernetescrd.allowCrossNamespace=true
 
     ports:
@@ -59,7 +58,7 @@ spec:
         io.cilium/lb-ipam-ips: "192.168.1.191"
       spec:
         externalTrafficPolicy: Cluster
-    
+
     # External traffic uses separate service with different IP
     additionalServices:
       external:
@@ -83,7 +82,7 @@ spec:
         enabled: true
         allowExternalNameServices: true
         publishedService:
-          enabled: false
+          enabled: true
 
     tlsStore:
       default:
