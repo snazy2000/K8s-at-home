@@ -56,7 +56,6 @@ spec:
         protocol: TCP
         http:
           middlewares:
-            - network-crowdsec-bouncer@kubernetescrd
             - network-error-pages@kubernetescrd
           tls:
             enabled: true
@@ -91,13 +90,6 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.maunder.co
-        entryPoints:
-          - websecure
-        matchRule: (Host(`traefik.maunder.co`) && PathPrefix(`/api`)) || (Host(`traefik.maunder.co`) && PathPrefix(`/dashboard`))
-        tls:
-          secretName: "${SECRET_DOMAIN}-production-tls"
 
     ingressClass:
       enabled: true
