@@ -27,6 +27,13 @@ spec:
     deployment:
       replicas: 2
 
+    env:
+      - name: BOUNCER_KEY_TRAEFIK
+        valueFrom:
+          secretKeyRef:
+            name: traefik-crowdsec-secret
+            key: BOUNCER_KEY_TRAEFIK
+
     global:
       checkNewVersion: false
       sendAnonymousUsage: false
