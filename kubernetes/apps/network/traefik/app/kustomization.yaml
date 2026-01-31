@@ -7,5 +7,4 @@ resources:
   - ./error-pages.yaml
   - ./ingressclass-external.yaml
   - ./service-external.yaml
-  # Middlewares will be added after Traefik CRDs are installed
-  # - ./middlewares.yaml
+  - ./middlewares.yaml
