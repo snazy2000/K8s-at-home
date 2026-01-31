@@ -1,17 +1,5 @@
 ---
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: crowdsec-bouncer
-  namespace: network
-spec:
-  plugin:
-    bouncer:
-      enabled: true
-      crowdsecMode: stream
-      crowdsecLapiScheme: http
-      crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
-      updateIntervalSeconds: 10
+# crowdsec-bouncer middleware is defined in helmrelease.yaml extraObjects using Helm lookup
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware

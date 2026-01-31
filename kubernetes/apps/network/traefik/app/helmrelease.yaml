@@ -161,3 +161,20 @@ spec:
     podSecurityContext:
       fsGroup: 65532
       fsGroupChangePolicy: OnRootMismatch
+
+    extraObjects:
+      - apiVersion: traefik.io/v1alpha1
+        kind: Middleware
+        metadata:
+          name: crowdsec-bouncer
+          namespace: network
+        spec:
+          plugin:
+            bouncer:
+              enabled: true
+              crowdsecMode: stream
+              crowdsecLapiScheme: http
+              crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
+              crowdsecLapiKey: '{{ (lookup "v1" "Secret" "network" "traefik-crowdsec-secret").data.BOUNCER_KEY_TRAEFIK | b64dec }}'
+              updateIntervalSeconds: 10
+
