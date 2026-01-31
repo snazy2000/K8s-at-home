@@ -107,8 +107,8 @@ spec:
         # -- Specify each pod you want to process it logs (namespace, podName and program)
         - namespace: network
           poll_without_inotify: true
-          podName: ingress-nginx-external-controller-*
-          program: nginx
+          podName: traefik-*
+          program: traefik
         - namespace: security
           poll_without_inotify: true
           podName: vaultwarden-*
@@ -156,7 +156,7 @@ spec:
           value: >-
             crowdsecurity/linux
             crowdsecurity/sshd
-            crowdsecurity/nginx
+            crowdsecurity/traefik
             crowdsecurity/base-http-scenarios
             crowdsecurity/http-cve
             crowdsecurity/pgsql
