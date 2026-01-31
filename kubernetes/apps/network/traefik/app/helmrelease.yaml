@@ -45,6 +45,8 @@ spec:
         tls:
           enabled: true
           options: "default"
+        middlewares:
+          - network-error-pages@kubernetescrd
       metrics:
         port: 9100
         expose:
@@ -71,12 +73,25 @@ spec:
 
     ingressRoute:
       dashboard:
-        enabled: false
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        entryPoints:
+          - websecure
+        matchRule: Host(`traefik.maunder.co`)
+        tls:
+          secretName: "${SECRET_DOMAIN}-production-tls"
 
     ingressClass:
       enabled: true
       isDefaultClass: true
       name: internal
+
+    experimental:
+      plugins:
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.3.5
 
     providers:
       kubernetesCRD:
