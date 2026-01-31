@@ -41,17 +41,8 @@ spec:
         port: 8080
         expose:
           default: false
-      websecure-internal:
+      websecure:
         port: 8443
-        expose:
-          default: true
-        exposedPort: 443
-        protocol: TCP
-        tls:
-          enabled: true
-          options: "default"
-      websecure-external:
-        port: 8444
         expose:
           default: true
         exposedPort: 443
@@ -70,30 +61,18 @@ spec:
       type: LoadBalancer
       annotations:
         io.cilium/lb-ipam-ips: "192.168.1.191"
-        external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
       spec:
         externalTrafficPolicy: Cluster
-
-    # Create separate service for external
+    
+    # External traffic uses separate service with different IP
     additionalServices:
       external:
-        enabled: true
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "192.168.1.193"
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
         spec:
           externalTrafficPolicy: Cluster
-          ports:
-            - name: websecure-external
-              port: 443
-              targetPort: websecure-external
-              protocol: TCP
-
-    ingressClass:
-      enabled: true
-      isDefaultClass: true
-      name: internal
 
     ingressRoute:
       dashboard:
