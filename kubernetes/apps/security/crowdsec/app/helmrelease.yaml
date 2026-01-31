@@ -140,6 +140,8 @@ spec:
       env:
         - name: TZ
           value: 'Europe/London'
+        - name: CONFIG_FILE
+          value: /etc/crowdsec/config.yaml
         # # default disable local API on the agent pod --> this is set in agent-daemonset helm template
         # - name: DISABLE_ONLINE_API
         #   value: "false"
