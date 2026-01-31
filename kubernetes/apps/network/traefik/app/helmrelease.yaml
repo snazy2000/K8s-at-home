@@ -27,9 +27,9 @@ spec:
     deployment:
       replicas: 2
 
-    globalArguments:
-      - --global.checknewversion=false
-      - --global.sendanonymoususage=false
+    global:
+      checkNewVersion: false
+      sendAnonymousUsage: false
 
     additionalArguments:
       - --serversTransport.insecureSkipVerify=true
@@ -42,12 +42,13 @@ spec:
           default: true
         exposedPort: 443
         protocol: TCP
-        tls:
-          enabled: true
-          options: "default"
-        middlewares:
-          - network-crowdsec-bouncer@kubernetescrd
-          - network-error-pages@kubernetescrd
+        http:
+          middlewares:
+            - network-crowdsec-bouncer@kubernetescrd
+            - network-error-pages@kubernetescrd
+          tls:
+            enabled: true
+            options: "default"
       metrics:
         port: 9100
         expose:
@@ -61,16 +62,14 @@ spec:
         io.cilium/lb-ipam-ips: "192.168.1.191"
       spec:
         externalTrafficPolicy: Cluster
-
-    # External traffic uses separate service with different IP
-    additionalServices:
-      external:
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: "192.168.1.193"
-          external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
-        spec:
-          externalTrafficPolicy: Cluster
+      additionalServices:
+        external:
+          type: LoadBalancer
+          annotations:
+            io.cilium/lb-ipam-ips: "192.168.1.193"
+            external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+          spec:
+            externalTrafficPolicy: Cluster
 
     ingressRoute:
       dashboard:
