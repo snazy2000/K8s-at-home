@@ -34,6 +34,12 @@ spec:
     additionalArguments:
       - --serversTransport.insecureSkipVerify=true
       - --providers.kubernetescrd.allowCrossNamespace=true
+      - --experimental.plugins.bouncer.settings.enabled=true
+      - --experimental.plugins.bouncer.settings.crowdsecMode=stream
+      - --experimental.plugins.bouncer.settings.crowdsecLapiScheme=http
+      - --experimental.plugins.bouncer.settings.crowdsecLapiHost=crowdsec-service.security.svc.cluster.local:8080
+      - --experimental.plugins.bouncer.settings.crowdsecLapiKey=${BOUNCER_KEY_TRAEFIK}
+      - --experimental.plugins.bouncer.settings.updateIntervalSeconds=10
 
     ports:
       websecure:
@@ -83,13 +89,6 @@ spec:
         bouncer:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
           version: v1.3.5
-          settings:
-            enabled: true
-            crowdsecMode: stream
-            crowdsecLapiScheme: http
-            crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
-            crowdsecLapiKey: "${BOUNCER_KEY_TRAEFIK}"
-            updateIntervalSeconds: 10
 
     providers:
       kubernetesCRD:
