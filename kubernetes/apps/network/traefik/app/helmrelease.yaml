@@ -73,6 +73,11 @@ spec:
       dashboard:
         enabled: false
 
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      name: internal
+
     providers:
       kubernetesCRD:
         enabled: true
