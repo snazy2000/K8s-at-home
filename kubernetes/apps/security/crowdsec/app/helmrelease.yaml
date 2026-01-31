@@ -131,11 +131,7 @@ spec:
       persistentVolume:
         # -- Persistent volume for config folder. Stores local config (parsers, scenarios etc.)
         config:
-          enabled: true
-          accessModes:
-            - ReadWriteMany
-          storageClassName: ceph-filesystem
-          size: 100Mi
+          enabled: false
       # -- environment variables from crowdsecurity/crowdsec docker image
       env:
         - name: TZ
