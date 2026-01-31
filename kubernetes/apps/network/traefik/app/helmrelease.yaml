@@ -27,13 +27,6 @@ spec:
     deployment:
       replicas: 2
 
-    env:
-      - name: BOUNCER_KEY_TRAEFIK
-        valueFrom:
-          secretKeyRef:
-            name: traefik-crowdsec-secret
-            key: BOUNCER_KEY_TRAEFIK
-
     global:
       checkNewVersion: false
       sendAnonymousUsage: false
@@ -51,7 +44,6 @@ spec:
         protocol: TCP
         http:
           middlewares:
-            - network-crowdsec-bouncer@kubernetescrd
             - network-error-pages@kubernetescrd
           tls:
             enabled: true
@@ -91,6 +83,13 @@ spec:
         bouncer:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
           version: v1.3.5
+          settings:
+            enabled: true
+            crowdsecMode: stream
+            crowdsecLapiScheme: http
+            crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
+            crowdsecLapiKey: "${BOUNCER_KEY_TRAEFIK}"
+            updateIntervalSeconds: 10
 
     providers:
       kubernetesCRD:
