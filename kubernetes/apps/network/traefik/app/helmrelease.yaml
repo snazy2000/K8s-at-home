@@ -28,12 +28,7 @@ spec:
       replicas: 2
 
     env:
-      - name: CROWDSEC_BOUNCER_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: traefik-crowdsec-secret
-            key: BOUNCER_KEY_TRAEFIK
-      - name: CROWDSEC_LAPI_KEY
+      - name: BOUNCER_KEY_TRAEFIK
         valueFrom:
           secretKeyRef:
             name: traefik-crowdsec-secret
@@ -90,6 +85,13 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        entryPoints:
+          - websecure
+        matchRule: Host(`traefik.maunder.co`)
+        tls:
+          secretName: "${SECRET_DOMAIN}-production-tls"
 
     ingressClass:
       enabled: true
