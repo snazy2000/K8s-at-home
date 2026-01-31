@@ -11,6 +11,7 @@ spec:
       crowdsecMode: stream
       crowdsecLapiScheme: http
       crowdsecLapiHost: crowdsec-service.security.svc.cluster.local:8080
+      crowdsecLapiKey: "${BOUNCER_KEY_TRAEFIK}"
       updateIntervalSeconds: 10
 ---
 apiVersion: traefik.io/v1alpha1
