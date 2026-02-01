@@ -27,25 +27,25 @@ spec:
       kopia:
         annotations:
           reloader.stakater.com/auto: "true"
-        
+
         containers:
           app:
             image:
               repository: ghcr.io/home-operations/kopia
               tag: 0.22.3@sha256:17ab64542280197a5368247deaefadc3e3bbe15714ab666c2455a06824e86efd
-            
+
             env:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 80
               TZ: Europe/London
-            
+
             envFrom:
               - secretRef:
                   name: kopia-secret
-            
+
             args:
               - --without-password
-            
+
             probes:
               liveness: &probes
                 enabled: true
@@ -59,20 +59,20 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            
+
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
                 drop: ["ALL"]
-            
+
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 2Gi
-    
+
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -82,29 +82,31 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
-    
+
     service:
       app:
         controller: kopia
         ports:
           http:
             port: *port
-    
+
     ingress:
       app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
         className: internal
         hosts:
-          - host: kopia.${CLUSTER_DOMAIN}
+          - host: kopia.maunder.co
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-    
+
     persistence:
       config:
         type: emptyDir
-      
+
       repository:
         type: nfs
         server: 192.168.1.100
