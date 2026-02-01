@@ -12,4 +12,3 @@ resources:
   - ./actual/ks.yaml
   - ./snipman/ks.yaml
   - ./bentopdf/ks.yaml
-  - ./manyfold/ks.yaml
