@@ -8,5 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./gatus/ks.yaml
   - ./netdata/ks.yaml
-  - ./headlamp/ks.yaml
   - ./speedtest-tracker/ks.yaml
