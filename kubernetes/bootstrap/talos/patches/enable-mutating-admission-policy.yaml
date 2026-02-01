@@ -1,0 +1,12 @@
+---
+# Enable MutatingAdmissionPolicy feature gate (beta in K8s 1.34)
+# This allows native Kubernetes admission policies without Kyverno
+cluster:
+  apiServer:
+    extraArgs:
+      feature-gates: MutatingAdmissionPolicy=true
+    admissionControl:
+      - name: MutatingAdmissionPolicy.admissionregistration.k8s.io
+        configuration:
+          apiVersion: apiserver.config.k8s.io/v1alpha1
+          kind: AdmissionConfiguration

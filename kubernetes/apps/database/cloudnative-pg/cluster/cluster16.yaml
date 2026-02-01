@@ -18,6 +18,10 @@ spec:
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
+      # Keep enough WAL for replicas to catch up after node downtime
+      wal_keep_size: "8GB"
+      # Ensure WAL is archived before removal
+      archive_timeout: "5min"
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true

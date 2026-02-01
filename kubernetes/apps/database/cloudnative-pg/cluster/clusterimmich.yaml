@@ -14,6 +14,11 @@ spec:
     shared_preload_libraries:
       - "vchord.so"
     enableAlterSystem: true
+    parameters:
+      # Keep enough WAL for replicas to catch up after node downtime
+      wal_keep_size: "8GB"
+      # Ensure WAL is archived before removal
+      archive_timeout: "5min"
   storage:
     size: 8Gi
   monitoring:
