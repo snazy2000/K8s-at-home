@@ -28,5 +28,4 @@ resources:
   - ./backube.yaml
   - ./netdata.yaml
   - ./descheduler.yaml
-  - ./kyverno.yaml
   - ./csi-driver-nfs.yaml

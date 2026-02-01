@@ -6,5 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./kopia/ks.yaml
   - ./minio/ks.yaml
   - ./volsync/ks.yaml
