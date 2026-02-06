@@ -32,7 +32,7 @@ spec:
           neppro:
             image:
               repository: octoeverywhere/octoeverywhere
-              tag: 4.6.4
+              tag: 4.6.6
             env:
               COMPANION_MODE: klipper
               PRINTER_IP: 192.168.1.50
@@ -40,7 +40,7 @@ spec:
           centcarbon:
             image:
               repository: octoeverywhere/octoeverywhere
-              tag: 4.6.4
+              tag: 4.6.6
             env:
               COMPANION_MODE: elegoo
               PRINTER_IP: 192.168.1.212
