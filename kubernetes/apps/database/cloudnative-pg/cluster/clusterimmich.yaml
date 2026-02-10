@@ -20,7 +20,7 @@ spec:
       # Ensure WAL is archived before removal
       archive_timeout: "5min"
   storage:
-    size: 8Gi
+    size: 20Gi
   monitoring:
     enablePodMonitor: true
   bootstrap:
