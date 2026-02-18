@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: huntarr/huntarr
-              tag: 9.2.4@sha256:ae4a435a4a2c68dbb03c0a6a30a7b9d8957d2e1653fef965c5f5d9cace991591
+              tag: 9.3.6@sha256:364c91535efe085ce30397a8a7b5085feec70e9da7dccf1252427885d80392b4
             env:
               TZ: 'Europe/London'
             securityContext:
