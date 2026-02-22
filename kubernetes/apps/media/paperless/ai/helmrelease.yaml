@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app paperless-ai
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.6.2
+      sourceRef:
+        kind: OCIRepository
+        name: app-template
+        namespace: flux-system
+  driftDetection:
+    mode: enabled
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      paperless-ai:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/clusterzx/paperless-ai
+              tag: 3.0.9@sha256:2b65888163fd59716f1c8285b31c5bd0b30c9c3c192c42b516688e3887d4ba60
+            env:
+              PAPERLESS_API_URL: http://paperless-app.media.svc.cluster.local:8000/api
+              AI_PROVIDER: ollama
+              SCAN_INTERVAL: "*/31 * * * *"
+              ADD_AI_PROCESSED_TAG: yes
+              AI_PROCESSED_TAG_NAME: ai-processed
+              OLLAMA_API_URL: http://ollama.ai.svc.cluster.local:11434
+              OLLAMA_MODEL: llama3.2:3b
+            envFrom:
+              - secretRef:
+                  name: paperless-ai
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 700m
+                memory: 2Gi
+    service:
+      app:
+        controller: paperless-ai
+        ports:
+          http:
+            port: &port 3000
+
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
+        className: internal
+        hosts:
+          - host: paperless-ai.maunder.co
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: paperless-ai
+        globalMounts:
+          - path: /app/data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
