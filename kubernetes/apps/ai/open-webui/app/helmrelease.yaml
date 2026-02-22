@@ -34,12 +34,17 @@ spec:
               OLLAMA_BASE_URL: http://ollama.ai.svc.cluster.local:11434
               WEBUI_AUTH: "true"
               ENABLE_SIGNUP: "false"
+              # Use Ollama for embeddings instead of downloading HuggingFace models
+              RAG_EMBEDDING_ENGINE: ollama
+              RAG_EMBEDDING_MODEL: nomic-embed-text
+              # Suppress CORS warning
+              CORS_ALLOW_ORIGIN: "https://ollama.maunder.co"
             resources:
               requests:
                 cpu: 100m
                 memory: 512Mi
               limits:
-                memory: 1Gi
+                memory: 3Gi
             probes:
               liveness:
                 enabled: true
