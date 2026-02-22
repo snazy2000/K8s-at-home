@@ -37,6 +37,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: paperless
+    - name: ollama
   path: ./kubernetes/apps/media/paperless/ai
   prune: true
   sourceRef:
@@ -61,6 +62,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: paperless
+    - name: ollama
   path: ./kubernetes/apps/media/paperless/gpt
   prune: true
   sourceRef:
