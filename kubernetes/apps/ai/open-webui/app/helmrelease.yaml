@@ -45,11 +45,6 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 3Gi
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
 
     service:
       app:
