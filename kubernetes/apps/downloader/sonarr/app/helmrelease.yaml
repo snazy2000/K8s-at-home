@@ -89,7 +89,7 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: maunder.co
+          external-dns.alpha.kubernetes.io/target: internal.maunder.co
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.maunder.co"
