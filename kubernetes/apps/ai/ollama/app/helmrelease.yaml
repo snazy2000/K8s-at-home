@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ollama/ollama
-              tag: 0.16.3@sha256:63f052826604a28a83795df1a66d9e364410c0b8d1357a62a885c62cef05cdbb
+              tag: 0.40.10@sha256:4c5b27871a3239a717048f9b93057680a51b60c8119a7016aebb57f938e25e35
             env:
               OLLAMA_HOST: 0.0.0.0:11434
               OLLAMA_MODELS: /models
