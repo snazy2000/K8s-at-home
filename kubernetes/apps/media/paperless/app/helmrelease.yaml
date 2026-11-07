@@ -66,7 +66,7 @@ spec:
           gotenberg:
             image:
               repository:  gotenberg/gotenberg
-              tag: 8
+              tag: 9
             command:
               - "gotenberg"
               - "--chromium-disable-javascript=true"
